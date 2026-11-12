@@ -29,10 +29,12 @@ Terms used here are defined in `GLOSSARY.md`.
 ## Stages
 
 ### 1. Set up the project
-- [ ] Python virtual environment, pytest, `.gitignore` (including `.DS_Store`).
-- [ ] Copy a sample Seats.aero response from the monitor's `tests/fixtures/` as the first test fixture.
+- [x] Python virtual environment, pytest, `.gitignore` (including `.DS_Store`).
+- [x] Copy a sample Seats.aero response from the monitor's `tests/fixtures/` as the first test fixture.
 
 **Done when:** `python -m pytest` runs (even with zero tests) on a fresh clone.
+
+**Write-up:** Added a `.venv` virtual environment on Python 3.12, a `requirements.txt` pinning `pytest==9.2.0`, a `.gitignore` (venv, caches, `.DS_Store`, `.env`) and a README with setup steps. The first fixture, `tests/fixtures/lhr_lax_match.json`, is copied byte-for-byte from the monitor. I added one small test that loads it, because pytest treats "no tests found" as a failure (exit code 5), and a real passing test is clearer evidence. I checked "fresh clone" by copying only the files git would commit into a scratch folder, building a new venv there and running `python -m pytest`: 1 passed.
 
 ### 2. Build the search core
 - [ ] A `search()` function that takes a route search and returns a result with a clear status (found, nothing found, failed).
