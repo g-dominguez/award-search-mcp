@@ -37,11 +37,13 @@ Terms used here are defined in `GLOSSARY.md`.
 **Write-up:** Added a `.venv` virtual environment on Python 3.12, a `requirements.txt` pinning `pytest==9.2.0`, a `.gitignore` (venv, caches, `.DS_Store`, `.env`) and a README with setup steps. The first fixture, `tests/fixtures/lhr_lax_match.json`, is copied byte-for-byte from the monitor. I added one small test that loads it, because pytest treats "no tests found" as a failure (exit code 5), and a real passing test is clearer evidence. I checked "fresh clone" by copying only the files git would commit into a scratch folder, building a new venv there and running `python -m pytest`: 1 passed.
 
 ### 2. Build the search core
-- [ ] A `search()` function that takes a route search and returns a result with a clear status (found, nothing found, failed).
-- [ ] Adapt the monitor's per-flight filtering: cabin, seats, points limit, direct only.
-- [ ] Sorting, the 20-result cap and the "showing 20 of N" count.
+- [x] A `search()` function that takes a route search and returns a result with a clear status (found, nothing found, failed).
+- [x] Adapt the monitor's per-flight filtering: cabin, seats, points limit, direct only.
+- [x] Sorting, the 20-result cap and the "showing 20 of N" count.
 
 **Done when:** tests pass for a match, no match, an API failure, a mixed cabin result and the cap.
+
+**Write-up:** `award_search/search.py` has `search()`, which takes a `RouteSearch` and returns a `SearchResult` with status found, nothing found or failed. A failed result always includes a reason, and the reason never contains the API key. The per-flight filtering is adapted from the monitor, but the cabin, seats, points limit and direct only values now come from the route search instead of constants. The HTTP call uses Python's built-in `urllib`, so no dependency was added. The tests fake the network call and cover a match, no match, API failures (401, 429, 500, unreachable, bad JSON, missing key), a mixed cabin flight, direct only and the 20-result cap. One surprise: the current Seats.aero docs have a per-flight `MixedCabinPct` field. The search sends `min_cabin_pct=0` so mixed cabin flights are returned and labelled with that field instead of being hidden. The mixed cabin fixture is hand-written from the docs, because no real response with that field was saved.
 
 ### 3. Build one MCP tool
 - [ ] Check the current MCP Python SDK docs for stdio servers and tool definitions (not from memory).
@@ -71,6 +73,14 @@ Terms used here are defined in `GLOSSARY.md`.
 - [ ] Host it over HTTP with authentication.
 
 **Done when:** Claude can use the remote server and unauthenticated requests are rejected.
+
+## Backlog
+
+- **Tax units aren't documented.** Seats.aero's docs don't say what unit `TotalTaxes` is in. The code divides by 100, like the monitor, which is wrong for currencies without cents (for example JPY). Check against a real response.
+- **Seats.aero link format isn't documented.** The link (`seats.aero/search?origin=…&destination=…&date=…`) is copied from the monitor. Check that it opens the right page.
+- **Departure time zone.** `DepartsAt` ends in `Z`, but the monitor treats it as local time. Confirm before showing times to the agent.
+- **Only the first page of results is read.** The search asks for up to 1,000 results (`take=1000`) and ignores `hasMore`/`cursor`, so `total_found` could undercount on very broad searches. Probably belongs in stage 5 (oversized response).
+- **Real fixture for mixed cabin.** Replace the hand-written `nce_lax_mixed_cabin.json` with a saved real response.
 
 ## Later ideas
 

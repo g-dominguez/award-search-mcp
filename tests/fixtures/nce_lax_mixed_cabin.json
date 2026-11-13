@@ -1,0 +1,42 @@
+{
+  "data": [
+    {
+      "Route": {
+        "OriginAirport": "NCE",
+        "DestinationAirport": "LAX",
+        "Source": "flyingblue"
+      },
+      "Date": "2027-07-17",
+      "WAvailable": true,
+      "WMileageCost": "62000",
+      "WRemainingSeats": 4,
+      "WTotalTaxes": 31250,
+      "WAirlines": "AF",
+      "WDirect": false,
+      "TaxesCurrency": "EUR",
+      "Source": "flyingblue",
+      "UpdatedAt": "2026-11-06T15:02:41.118204Z",
+      "AvailabilityTrips": [
+        {
+          "FlightNumbers": "AF7701, AF66",
+          "Cabin": "premium",
+          "MixedCabinPct": 9,
+          "RemainingSeats": 4,
+          "MileageCost": 62000,
+          "TotalTaxes": 31250,
+          "TaxesCurrency": "EUR",
+          "Carriers": "AF",
+          "Stops": 1,
+          "OriginAirport": "NCE",
+          "DestinationAirport": "LAX",
+          "DepartsAt": "2027-07-17T07:10:00Z",
+          "ArrivesAt": "2027-07-17T13:45:00Z",
+          "UpdatedAt": "2026-11-06T15:02:41.118204Z",
+          "Source": "flyingblue"
+        }
+      ]
+    }
+  ],
+  "count": 1,
+  "hasMore": false
+}
