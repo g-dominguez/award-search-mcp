@@ -46,10 +46,12 @@ Terms used here are defined in `GLOSSARY.md`.
 **Write-up:** `award_search/search.py` has `search()`, which takes a `RouteSearch` and returns a `SearchResult` with status found, nothing found or failed. A failed result always includes a reason, and the reason never contains the API key. The per-flight filtering is adapted from the monitor, but the cabin, seats, points limit and direct only values now come from the route search instead of constants. The HTTP call uses Python's built-in `urllib`, so no dependency was added. The tests fake the network call and cover a match, no match, API failures (401, 429, 500, unreachable, bad JSON, missing key), a mixed cabin flight, direct only and the 20-result cap. One surprise: the current Seats.aero docs have a per-flight `MixedCabinPct` field. The search sends `min_cabin_pct=0` so mixed cabin flights are returned and labelled with that field instead of being hidden. The mixed cabin fixture is hand-written from the docs, because no real response with that field was saved.
 
 ### 3. Build one MCP tool
-- [ ] Check the current MCP Python SDK docs for stdio servers and tool definitions (not from memory).
-- [ ] Expose `search_award_seats` over stdio.
+- [x] Check the current MCP Python SDK docs for stdio servers and tool definitions (not from memory).
+- [x] Expose `search_award_seats` over stdio.
 
 **Done when:** a test starts the server, lists its tools and calls `search_award_seats` against a fixture.
+
+**Write-up:** Added `mcp==2.3.0`, the current stable SDK. Version 2 renamed the server class from `FastMCP` to `MCPServer`, so most older examples online no longer match. `award_search/server.py` defines `search_award_seats` and runs over stdio with `python -m award_search.server`. The SDK builds the tool's input schema from type hints, and the descriptions come from `Field(...)`, so bad arguments like `cabin: "coach"` are rejected before any search runs. The tool returns a `SearchAnswer` with a status, the seats, "shown" and "total found" counts, and a plain-language message. The message says a failed search doesn't mean there are no seats, and that found seats should be confirmed before transferring points. The main test starts the server as a real subprocess and points it at a fake Seats.aero on `127.0.0.1` via a new `SEATS_AERO_API_URL` setting. It checks that the API key reaches Seats.aero but never appears in the tool result. Surprise: the SDK doesn't pass your environment variables to a subprocess server by default, so the test passes the key in explicitly.
 
 ### 4. Connect it to Claude
 - [ ] Add the server to Claude Desktop or Claude Code.
