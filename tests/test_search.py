@@ -203,3 +203,10 @@ def test_results_are_capped_with_total_count(fake_api):
     assert points == sorted(points)
     assert points[0] == 50000
     assert points[-1] == 69000
+
+
+def test_end_date_before_start_date_is_failed():
+    result = search(route_search(start_date=date(2027, 7, 20), end_date=date(2027, 7, 17)), api_key="fake-key")
+
+    assert result.status == SearchStatus.FAILED
+    assert "end_date" in result.reason

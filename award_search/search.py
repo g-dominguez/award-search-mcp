@@ -17,7 +17,8 @@ from dataclasses import dataclass, field
 from datetime import date
 from enum import StrEnum
 
-API_URL = "https://seats.aero/partnerapi/search"
+# Overridable so tests can point a running server at a local fake Seats.aero
+API_URL = os.getenv("SEATS_AERO_API_URL", "https://seats.aero/partnerapi/search")
 RESULT_CAP = 20
 
 # Seats.aero prefixes its per-cabin summary fields with these letters (WMileageCost, JAvailable...)
@@ -92,6 +93,9 @@ def search(route_search: RouteSearch, api_key: str | None = None) -> SearchResul
             SearchStatus.FAILED,
             reason=f"Unknown cabin {route_search.cabin!r}. Use one of: {', '.join(CABIN_LETTERS)}.",
         )
+
+    if route_search.end_date < route_search.start_date:
+        return SearchResult(SearchStatus.FAILED, reason="end_date is before start_date.")
 
     try:
         response = fetch_availability(build_params(route_search), api_key)
