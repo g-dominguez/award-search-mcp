@@ -1,0 +1,51 @@
+# AWS SAM template: the award search MCP server as a Lambda behind an HTTPS function URL.
+# Build and deploy with: sam build && sam deploy (see the README's "Host it on AWS" section).
+# The secrets aren't in here: the Lambda reads them from Parameter Store when it starts.
+# Spending is watched by the account's existing $5 monthly budget, which emails alerts.
+
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Read-only award seat search over MCP, using Seats.aero.
+
+Resources:
+  AwardSearchFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile # see Makefile
+    Properties:
+      CodeUri: .
+      Handler: run.sh
+      Runtime: python3.12
+      Architectures: [arm64]
+      MemorySize: 512
+      Timeout: 30 # a search gives up on Seats.aero after 20 seconds
+      # At most 5 copies run at once, which caps what junk traffic to the public URL can cost
+      ReservedConcurrentExecutions: 5
+      Layers:
+        # Lambda Web Adapter 1.1.0: turns Lambda requests into normal HTTP requests to run.sh's server
+        - !Sub arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerArm64:30
+      Environment:
+        Variables:
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+          PORT: 8080
+          PARAMETER_STORE_PREFIX: /award-search/
+      # Anyone can reach the URL; the server itself rejects requests without the bearer token
+      FunctionUrlConfig:
+        AuthType: NONE
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action: ssm:GetParameter
+              Resource: !Sub arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/award-search/*
+
+  # Created here so old logs are deleted after 2 weeks instead of kept (and billed) forever
+  AwardSearchLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${AwardSearchFunction}
+      RetentionInDays: 14
+
+Outputs:
+  McpUrl:
+    Description: The address to give Claude Code.
+    Value: !Sub ${AwardSearchFunctionUrl.FunctionUrl}mcp

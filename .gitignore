@@ -1,4 +1,4 @@
-# Virtual environment (rebuilt from requirements.txt, never committed)
+# Virtual environment (rebuilt from requirements-dev.txt, never committed)
 .venv/
 
 # Python caches
@@ -10,3 +10,6 @@ __pycache__/
 
 # Local secrets
 .env
+
+# AWS SAM build output
+.aws-sam/

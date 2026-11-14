@@ -66,7 +66,7 @@ Each one is explained in `PLAN.md`, with the evidence behind it.
 ```sh
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 python -m pytest
 ```
 
@@ -92,6 +92,34 @@ export SEATS_AERO_API_KEY="$(security find-generic-password -a "$USER" -s seats-
 ```
 
 Start `claude` in this folder, approve the `award-search` server, and check it with `/mcp`.
+
+## Host it on AWS
+
+The same server can run on AWS Lambda behind an HTTPS address, so it works from any folder without anything running on your laptop. `award_search/http_app.py` serves it over HTTP and rejects any request without the right bearer token. `template.yaml` describes the Lambda for AWS SAM, and the `Makefile` decides what goes into it. Normal use costs about a cent a month.
+
+The two secrets live in Parameter Store as encrypted parameters, and the Lambda reads them when it starts:
+
+```sh
+python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # make a bearer token
+aws ssm put-parameter --type SecureString --name /award-search/SEATS_AERO_API_KEY --value ...
+aws ssm put-parameter --type SecureString --name /award-search/MCP_BEARER_TOKEN --value ...
+```
+
+Then build and deploy. The last line of the output is the server's address.
+
+```sh
+sam build
+sam deploy --stack-name award-search-mcp --resolve-s3 --capabilities CAPABILITY_IAM
+```
+
+To use it from Claude Code in every folder, keep the token in your shell like the API key above, and add the server with the variable's name in single quotes, so the token itself isn't saved in Claude Code's settings:
+
+```sh
+export AWARD_SEARCH_MCP_TOKEN="$(security find-generic-password -a "$USER" -s award-search-mcp-token -w)"   # in ~/.zshrc
+claude mcp add --transport http --scope user award-search-remote <address> --header 'Authorization: Bearer ${AWARD_SEARCH_MCP_TOKEN}'
+```
+
+To run the HTTP version locally instead: `MCP_BEARER_TOKEN=... SEATS_AERO_API_KEY=... python -m award_search.http_app`, which serves it at `http://127.0.0.1:8080/mcp`.
 
 ## Evals
 

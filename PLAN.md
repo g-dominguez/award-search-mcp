@@ -21,12 +21,13 @@ Terms used here are defined in `GLOSSARY.md`.
 - **A failed search never looks like an empty one.** Every search returns one of: found seats, found nothing, or failed (with the reason).
 - **Results are capped:** sorted by fewest points per seat, top 20, with a count of how many were left out. When there are more than 20, a summary of all matches is added. It's grouped by route and date, or by route and month (with the dates) for ranges over 31 days, so the cap can't hide whole dates or airports. Added November 14, 2026, after evals showed Claude needing 3–4 searches to see past the cap; with the summary it usually needs one.
 - **Each result shows:** date, route, departure time, loyalty program, operating airline(s), points per seat and in total, taxes and fees in the program's own currency, seats available, stops and the connection airports, whether it's mixed cabin, last seen, and a Seats.aero link.
-- **Identical searches within 15 minutes reuse the earlier result** and say so, to save API quota. Failed searches aren't reused. Added November 14, 2026, after evals showed Claude sometimes sending the same search twice at once.
+- **Identical searches within 15 minutes reuse the earlier result** and say so, to save API quota. Failed searches aren't reused. Added November 14, 2026, after evals showed Claude sometimes sending the same search twice at once. On Lambda (stage 7) each running copy has its own cache, so this is best-effort there: two identical searches at the same moment can use 2 API calls. Accepted, since I'm the only user and the quota is 1,000 calls a day.
 - **Data can be out of date.** Every result shows when it was last seen, and the output tells the agent to suggest confirming on the loyalty program's site before transferring points.
 - **The API key stays on the server** and never reaches the model.
 - **Python with the official MCP Python SDK.** Tests use saved fake API responses and never hit the network.
 - **Fixtures are made up.** Seats.aero's terms (updated August 12, 2026) say flights more than 60 days out can't be shown publicly, and this repo is public. So test and eval fixtures are invented flights in Seats.aero's response format, and real responses are only used locally to learn the format. History was rewritten on November 14, 2026 to remove the real responses committed before this rule.
 - **Runs on my laptop first.** AWS hosting is an optional final stage if costs stay low.
+- **Hosted on AWS Lambda with a function URL** (stage 7, decided November 14, 2026). Deployed with an AWS SAM template to `us-west-2`. Secrets live in Parameter Store. Every request needs a bearer token, which the server checks itself instead of using the SDK's OAuth settings. Those settings make the server announce OAuth, and an open Claude Code bug report says that makes it ignore the token header. Only Claude Code uses the remote server: Claude Desktop accepts a static token only through a beta limited to some organizations, so it keeps using the local version. The URL isn't committed, because this repo is public: Claude Code is set up with `claude mcp add --scope user`.
 
 ## Stages
 
@@ -85,10 +86,12 @@ A real broad search through `claude -p` showed Claude passing on the new warning
 
 ### 7. Host it on AWS (optional)
 - [x] Check that the Seats.aero terms and API quota allow this use. Checked November 14, 2026: personal, non-commercial use is allowed without permission; a Pro subscription "may not be shared with others"; the quota is 1,000 API calls per day; and data must be credited to Seats.aero with a link. Hosting is fine only if I'm the sole user.
-- [ ] Estimate the monthly cost before deploying.
-- [ ] Host it over HTTP with authentication.
+- [x] Estimate the monthly cost before deploying. Checked November 14, 2026 against AWS's pricing pages: about $0.01/month for normal use (~300 searches) and under $1/month even at the full Seats.aero quota every day, before any free tier. Assumes Arm, 512 MB and ~2 seconds per search. Parameter Store standard parameters are free. Junk requests to the public URL are the main cost risk (about $0.25 per million), so reserved concurrency limits how many copies run at once, and the account's existing $5 monthly budget emails me. Ruled out: Lightsail ($3.50–5/month, plus a domain for HTTPS), App Runner (closed to new customers since April 30, 2026) and ECS/Fargate (needs a load balancer).
+- [x] Host it over HTTP with authentication.
 
 **Done when:** Claude can use the remote server and unauthenticated requests are rejected.
+
+**Write-up:** The server runs on Lambda (Arm, Python 3.12) behind a function URL, and `template.yaml` describes it for AWS SAM. `award_search/http_app.py` serves the unchanged MCP server over HTTP through AWS's Lambda Web Adapter. The server is stateless, so any running copy can answer, and it rejects any request without the bearer token with a 401. It also won't start with a token under 32 characters. On Lambda, `boto3`, which comes with Lambda's Python runtime, loads both secrets from Parameter Store. Evidence: 8 new tests run the HTTP server as its own process (all 49 pass), the live URL returned 401 with no token or a wrong one and 200 with the right one, and `claude -p` ran a real search through it. A `Makefile` packages only the server and `mcp`, so I split `requirements-dev.txt` (which adds pytest) from `requirements.txt`. Surprises: a new copy of the Lambda takes about 2.2 seconds to start and AWS bills that time, while warm requests take 2–4 ms. Committing the URL to `.mcp.json` would have published it, so Claude Code gets it from a user-scope setting instead. And I dropped the budget I'd planned in the template, because the account's existing $5 budget already sends alerts.
 
 ## Backlog
 
@@ -96,5 +99,6 @@ A real broad search through `claude -p` showed Claude passing on the new warning
 
 ## Later ideas
 
+- OAuth for the hosted server, so Claude Desktop and claude.ai can use it without the static-token beta.
 - Open searches by program ("where can I fly business with Aeroplan in March?"), using Seats.aero's broader availability endpoint.
 - Use the Playwright MCP next to this server to check other sites. This only involves configuring Claude, not changing this server's code. Check each site's terms first.
