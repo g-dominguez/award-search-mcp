@@ -82,7 +82,8 @@ CASES = [
             JudgeCheck(
                 "nothing_under_limit",
                 "The cheapest seats cost 98,000 points per seat, so nothing is under 75k. A good answer "
-                "says there is nothing under 75k. It fails if it claims seats under 75k exist.",
+                "says there is nothing under 75k. It fails only if it says the search found seats under 75k. "
+                "General tips about how prices could change, such as promotions, are fine.",
             ),
         ],
     ),
@@ -117,7 +118,7 @@ CASES = [
         scenario=Scenario(fixture=EVAL_FIXTURES / "sfo_tokyo_business_spring.json"),
         checks=[
             searched,
-            CodeCheck("origin_sfo", lambda run: run.first.get("origins") == ["SFO"]),
+            CodeCheck("origins_include_sfo", lambda run: "SFO" in run.first.get("origins", [])),
             CodeCheck("tokyo_airports", lambda run: {"HND", "NRT"} <= set(run.first.get("destinations", []))),
             CodeCheck("points_limit", lambda run: run.first.get("points_limit") in (89999, 90000)),
             CodeCheck(

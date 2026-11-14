@@ -1,0 +1,1248 @@
+{
+  "started_at": "2026-11-14 12:47:19",
+  "model": "claude-opus-5-5",
+  "judge_model": "haiku",
+  "repeat": 3,
+  "cases": [
+    {
+      "name": "vague_dates_points_limit",
+      "passed": true,
+      "runs": [
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origin_is_nice",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "destination_includes_lax",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "cabin_premium",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit_per_seat",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "mid_july_dates",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "nothing_under_limit",
+              "passed": true,
+              "detail": "The answer says nothing under 75k was found and that the cheapest seats are 98k, which matches the rule; its later tips about promos are allowed general advice."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-10",
+              "end_date": "2027-07-20",
+              "cabin": "premium",
+              "points_limit": 75000
+            },
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-10",
+              "end_date": "2027-07-20",
+              "cabin": "premium"
+            }
+          ],
+          "answer": "I found no premium economy award seats from Nice to LAX under 75k points. I searched July 10\u201320, 2027 for one seat.\n\nThere are seats in that range, but the cheapest is 98k points. All are one-stop flights:\n\n| Price | Program | Flights | Dates (seats left) |\n|---|---|---|---|\n| **98k + ~$352** | Flying Blue | Air France via Paris, departs 06:10 | Jul 11 (6), 12 (9), 13 (5), 14 (2), 15 (5), 16 (2), 17 (8) |\n| **98k + ~$360** | Flying Blue | KLM via Amsterdam, departs 06:25 | Jul 15 (6), 17 (5), 18 (1) |\n| 112k + ~$360 | Flying Blue | KLM via Amsterdam | Jul 11\u201314, 16 |\n| 125k + $56 | Delta | Air France and Delta | Jul 13 (1), 20 (2) |\n\n- **Cheapest option:** the 98k Flying Blue seats. Check Flying Blue's monthly Promo Rewards, which sometimes discount Europe\u2013US awards by 20\u201350%. A promo could bring these seats under 75k.\n- **Fewest seats left:** July 14, 16 and 18 have only 1\u20132 seats left at 98k.\n- **Data age:** the seat counts were last updated about 2 hours ago. Check on Flying Blue before you transfer any points, because transfers usually can't be undone.\n\nI only searched LAX. I can also try Burbank, Orange County (SNA) and Long Beach, widen the dates, or check business class in case a deal comes in close to your budget.",
+          "model": "claude-opus-5-5",
+          "seconds": 20.8
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origin_is_nice",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "destination_includes_lax",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "cabin_premium",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit_per_seat",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "mid_july_dates",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "nothing_under_limit",
+              "passed": true,
+              "detail": "The answer states that nothing is under 75k, and it only lists the 98k-and-up results as the cheapest options it found, so it does not claim any seat under 75k was found."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-10",
+              "end_date": "2027-07-20",
+              "cabin": "premium",
+              "points_limit": 75000
+            },
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-10",
+              "end_date": "2027-07-20",
+              "cabin": "premium"
+            }
+          ],
+          "answer": "No. I searched premium economy from Nice (NCE) to LAX for July 10\u201320, 2027, and nothing comes in under 75k points.\n\nTo see what's out there, I ran the search again with no points limit. It found 17 flights, and the cheapest are about 23k over your budget:\n\n| Price per seat | Program | Flights | Dates (seats available) | Taxes |\n|---|---|---|---|---|\n| **98,000** | Flying Blue | Air France via Paris (AF9321 \u2192 AF9020), leaves 06:10 | Jul 11 (6), 12 (9), 13 (5), 14 (2), 15 (5), 16 (2), 17 (8) | ~$352 |\n| **98,000** | Flying Blue | KLM via Amsterdam (KL9472 \u2192 KL9601), leaves 06:25 | Jul 15 (6), 17 (5), 18 (1) | ~$360 |\n| 112,000 | Flying Blue | Same KLM flights | Jul 11, 12, 13, 14, 16 | ~$360 |\n| 125,000 | Delta | AF9323 \u2192 DL9255, leaves 09:40 | Jul 13 (1), 20 (2) | $56 |\n\nAll of these have one stop. The data was last updated about 2 hours ago.\n\n- **Best value:** Flying Blue at 98k on the Air France flights, which have space on most days from July 11\u201317.\n- **Lowest taxes:** Delta at 125k, with only $56 in taxes compared with about $350.\n- **Getting under 75k:** Flying Blue runs monthly Promo Rewards that often take 25\u201350% off certain routes. A 98k seat would drop to about 49\u201374k, so it's worth watching. Prices often change as the date gets closer, too.\n\nCheck the price on the airline's website before you transfer any points, since this data can be out of date. I can also search a wider date range, other LA-area airports, or business class if you'd like.",
+          "model": "claude-opus-5-5",
+          "seconds": 21.5
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origin_is_nice",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "destination_includes_lax",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "cabin_premium",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit_per_seat",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "mid_july_dates",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "nothing_under_limit",
+              "passed": true,
+              "detail": "The answer says the search found no premium economy seats under 75k and only reports the 98k-and-up options as the cheapest found, so it does not claim any seats under 75k were found."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX",
+                "BUR",
+                "LGB",
+                "SNA",
+                "ONT"
+              ],
+              "start_date": "2027-07-10",
+              "end_date": "2027-07-20",
+              "cabin": "premium",
+              "points_limit": 75000
+            },
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX",
+                "BUR",
+                "LGB",
+                "SNA",
+                "ONT"
+              ],
+              "start_date": "2027-07-10",
+              "end_date": "2027-07-20",
+              "cabin": "premium"
+            }
+          ],
+          "answer": "I found no premium economy seats from Nice to LA under 75k points for July 10\u201320, 2027. I checked LAX, Burbank, Long Beach, Orange County and Ontario. The search ran without errors.\n\nI also searched with no points limit to see what's out there. The cheapest option is 98,000 points:\n\n| Price | Program | Flights | Dates (seats left) | Taxes |\n|---|---|---|---|---|\n| **98k** | Flying Blue | Air France, 06:10 departure, 1 stop (AF9321 + AF9020) | Jul 11 (6), 12 (9), 13 (5), 14 (2), 15 (5), 16 (2), 17 (8) | ~$352 |\n| **98k** | Flying Blue | KLM, 06:25 departure, 1 stop (KL9472 + KL9601) | Jul 15 (6), 17 (5), 18 (1) | ~$360 |\n| 112k | Flying Blue | KLM, same flights | Jul 11\u201314, 16 | ~$360 |\n| 125k | Delta SkyMiles | Air France + Delta, 09:40 departure | Jul 13 (1), 20 (2) | $56 |\n\n- **Cheapest overall:** 98k Flying Blue on Air France, and it's open on most dates from July 11\u201317.\n- **Delta option:** it costs more points, but taxes are only $56, about $300 less in cash.\n- **Freshness:** this data was last updated about 2 hours ago. Confirm availability on the airline's site before you transfer any points.\n\nI can search a wider date range, look at economy or business, or check other nearby departure airports like Marseille. Any of those might find something under 75k.",
+          "model": "claude-opus-5-5",
+          "seconds": 20.8
+        }
+      ]
+    },
+    {
+      "name": "missing_destination_asks",
+      "passed": true,
+      "runs": [
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "did_not_search",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "asks_a_question",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [],
+          "answer": "Happy to search. First, where are you flying to? The search needs a destination airport or city, and I don't want to guess.\n\nA couple of quick details would also help:\n- **Cabin:** economy, premium economy, business or first?\n- **Seats:** how many people are travelling?\n\nUnless you tell me otherwise, I'll search from NCE for **July 10\u201320, 2027**.",
+          "model": "claude-opus-5-5",
+          "seconds": 7.5
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "did_not_search",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "asks_a_question",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [],
+          "answer": "I can search that. First I need to know where you're flying to. Nice (NCE) is the origin, but the search needs a destination too. A city, a country or a region is fine, and I'll work out the airports.\n\nTo get it right in one go, can you also tell me:\n- **Cabin:** economy, premium economy, business or first?\n- **Number of travellers:** how many seats do you need on the same flight?\n\nFor dates, I'll search **July 10\u201320, 2027**, since July 2026 has already passed. Tell me if you want a different window.",
+          "model": "claude-opus-5-5",
+          "seconds": 7.5
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "did_not_search",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "asks_a_question",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [],
+          "answer": "Happy to look. Where do you want to fly to from Nice? The search needs specific destination airports, e.g. \"New York\" (JFK/EWR) or \"anywhere in the US\".\n\nA couple of other things would help:\n- **Cabin:** economy, premium economy, business or first?\n- **Seats:** how many people are travelling?\n- **Dates:** I'll take \"mid-July\" to mean about **July 10\u201320, 2027**. Let me know if you'd like a different range.",
+          "model": "claude-opus-5-5",
+          "seconds": 7.5
+        }
+      ]
+    },
+    {
+      "name": "cities_and_party_size",
+      "passed": true,
+      "runs": [
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "london_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "new_york_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "two_seats",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "exact_date",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "cabin_business",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW",
+                "LCY",
+                "STN"
+              ],
+              "destinations": [
+                "JFK",
+                "EWR",
+                "LGA"
+              ],
+              "start_date": "2027-03-10",
+              "end_date": "2027-03-10",
+              "cabin": "business",
+              "seats": 2
+            }
+          ],
+          "answer": "I found 7 business class options from London to New York on 10 March 2027 for 2 travellers. Points prices below are for both of you.\n\n| Departs (London time) | Route | Program | Flight | Points total (per seat) | Taxes | Seats left | Stops |\n|---|---|---|---|---|---|---|---|\n| 08:30 | LHR \u2192 JFK | Virgin Atlantic | VS9001 | **95,000** (47,500) | \u00a3720.60 | 4 | Nonstop |\n| 09:45 | LHR \u2192 JFK | American | AA9101 | 115,000 (57,500) | $234.40 | Unknown | Nonstop |\n| 16:10 | LHR \u2192 JFK | Virgin Atlantic | VS9153 | 115,000 (57,500) | \u00a3720.60 | 2 | Nonstop |\n| 11:15 | LGW \u2192 JFK | British Airways | BA9183 | 136,000 (68,000) | \u00a3853 | 3 | Nonstop |\n| 12:05 | LHR \u2192 EWR | United | UA9016 | 160,000 (80,000) | $189.20 | 6 | Nonstop |\n| 10:00 | LHR \u2192 EWR | Aeroplan (Air Canada) | AC9865, AC9718 | 140,000 (70,000) | C$213.80 | 2 | 1 stop |\n| 07:00 | LGW \u2192 JFK | Flying Blue (Air France) | AF9181, AF9008 | 170,000 (85,000) | \u20ac243 | 5 | 1 stop, mixed cabin* |\n\n\\*About 14% of the Air France trip is in a lower cabin than business, probably the short first flight.\n\n**Notes:**\n- **Lowest points:** the Virgin Atlantic 08:30 flight is the cheapest by a wide margin and has 4 seats, so there's room for both of you. Its taxes are high, though, at about \u00a3720.\n- **Lowest taxes:** American at 115,000 points has much lower taxes. The search couldn't tell how many seats are left on that flight, so check that 2 are open. United also has low taxes but costs more points.\n- **Taxes:** the search doesn't say whether the amounts shown are per person or for both of you. Check the real total on the program's site.\n- **Only 2 seats:** VS9153 and the Aeroplan option have exactly 2 seats left, so they could disappear quickly.\n- **How current this is:** the data was last updated about 2 hours ago. Before you move any points into a program, confirm the seats are still there on that program's own website, because points transfers usually can't be undone.\n\nI can also search nearby dates, other cabins, or the return flight.",
+          "model": "claude-opus-5-5",
+          "seconds": 15.7
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "london_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "new_york_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "two_seats",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "exact_date",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "cabin_business",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW",
+                "LCY",
+                "STN"
+              ],
+              "destinations": [
+                "JFK",
+                "EWR",
+                "LGA"
+              ],
+              "start_date": "2027-03-10",
+              "end_date": "2027-03-10",
+              "cabin": "business",
+              "seats": 2
+            }
+          ],
+          "answer": "I found 7 business class options for 2 people from London to New York on 10 March 2027. They're sorted by points per person:\n\n| # | Route | Departs | Program (airline) | Points (pp / total for 2) | Taxes | Seats left | Notes |\n|---|---|---|---|---|---|---|---|\n| 1 | LHR\u2192JFK | 08:30 | Virgin Atlantic (VS9001) | 47,500 / **95,000** | \u00a3720.60 | 4 | Direct, cheapest |\n| 2 | LHR\u2192JFK | 09:45 | American (AA9101) | 57,500 / 115,000 | $234.40 | Unknown | Direct |\n| 3 | LHR\u2192JFK | 16:10 | Virgin Atlantic (VS9153) | 57,500 / 115,000 | \u00a3720.60 | 2 | Direct |\n| 4 | LGW\u2192JFK | 11:15 | British Airways (BA9183) | 68,000 / 136,000 | \u00a3853 | 3 | Direct |\n| 5 | LHR\u2192EWR | 10:00 | Aeroplan (Air Canada) | 70,000 / 140,000 | CA$213.80 | 2 | 1 stop |\n| 6 | LHR\u2192EWR | 12:05 | United (UA9016) | 80,000 / 160,000 | $189.20 | 6 | Direct |\n| 7 | LGW\u2192JFK | 07:00 | Flying Blue (Air France) | 85,000 / 170,000 | \u20ac243 | 5 | 1 stop, about 14% of the trip in a lower cabin |\n\n**Points to note:**\n- **Fewest points:** Virgin Atlantic's 08:30 flight costs 95,000 points for both of you, but the taxes are high (\u00a3720.60).\n- **Lower cash cost:** American's 09:45 flight costs 20,000 more points in total, but the taxes are much lower ($234.40). Seats.aero doesn't know how many seats are left on it, so check that 2 are available.\n- **Taxes:** the results don't say whether the tax figures are per person or for the whole booking. Check on the airline's site before you book.\n- **Freshness:** this data was last updated about 2 hours ago. Award seats can disappear quickly, so check on the program's own website before you transfer any points.\n\nIf you tell me which points programs you have (Amex, Chase, Avios and so on), I can narrow this down to the options you can actually book.",
+          "model": "claude-opus-5-5",
+          "seconds": 15.0
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "london_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "new_york_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "two_seats",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "exact_date",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "cabin_business",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW",
+                "LCY",
+                "STN"
+              ],
+              "destinations": [
+                "JFK",
+                "EWR",
+                "LGA"
+              ],
+              "start_date": "2027-03-10",
+              "end_date": "2027-03-10",
+              "cabin": "business",
+              "seats": 2
+            }
+          ],
+          "answer": "I found 7 business class options from London to New York on 10 March 2027. All of them were last checked about 2 hours ago.\n\n| # | Route | Departs | Program | Flight | Points (each / for 2) | Taxes | Seats | Stops |\n|---|---|---|---|---|---|---|---|---|\n| 1 | LHR \u2192 JFK | 08:30 | Virgin Atlantic | VS9001 | 47,500 / **95,000** | \u00a3720.60 | 4 | Direct |\n| 2 | LHR \u2192 JFK | 09:45 | American AAdvantage | AA9101 | 57,500 / 115,000 | $234.40 | Unknown | Direct |\n| 3 | LHR \u2192 JFK | 16:10 | Virgin Atlantic | VS9153 | 57,500 / 115,000 | \u00a3720.60 | 2 | Direct |\n| 4 | LGW \u2192 JFK | 11:15 | British Airways Avios | BA9183 | 68,000 / 136,000 | \u00a3853 | 3 | Direct |\n| 5 | LHR \u2192 EWR | 10:00 | Aeroplan | AC9865, AC9718 | 70,000 / 140,000 | CA$213.80 | 2 | 1 stop |\n| 6 | LHR \u2192 EWR | 12:05 | United | UA9016 | 80,000 / 160,000 | $189.20 | 6 | Direct |\n| 7 | LGW \u2192 JFK | 07:00 | Flying Blue | AF9181, AF9008 | 85,000 / 170,000 | \u20ac243 | 5 | 1 stop, mixed cabin* |\n\n\\*About 14% of the Flying Blue trip is in a lower cabin, not business.\n\nThe search doesn't say whether the taxes are per person or for both of you, so check that when you book.\n\n**My picks:**\n- **Fewest points:** Virgin Atlantic VS9001 at 95,000 points for both of you, direct. It has 4 seats, so there's some room. The taxes and fees are high, though, at \u00a3720.60.\n- **Lower taxes:** American AA9101 is 115,000 points for both with $234.40 in taxes, also direct. The search couldn't tell how many seats are open, so make sure there are 2 before you move any points.\n- **Most seats:** United UA9016 has 6 open, but it's the most expensive direct option at 160,000 points for both.\n\nSeat availability can change quickly. Before transferring any points, check that the seats are still there on the airline's own website. If you tell me which points programs you have, I can narrow this down to the ones you can book.",
+          "model": "claude-opus-5-5",
+          "seconds": 15.4
+        }
+      ]
+    },
+    {
+      "name": "season_dates",
+      "passed": true,
+      "runs": [
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origins_include_sfo",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "tokyo_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "spring_dates",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 89999
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 89999,
+              "direct_only": true
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-04-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 89999
+            }
+          ],
+          "answer": "I found plenty of business class seats under 90k points per person from SFO to Tokyo for March through May 2027. **Nonstops cost only 2\u20133k more than the cheapest option, so I'd book a nonstop.**\n\n### Best pick: ANA nonstop SFO\u2192Haneda, 87,000 LifeMiles + $41\nFlight NH9107 departs at 1:25am (overnight). Dates with seats:\n- **March:** 16, 22, 26\n- **April:** 7, 8, 10, 19, 24\n- **May:** 5, 7, 10, 19, 20, 23, 26\n\n### Also nonstop: United SFO\u2192Narita, 88,000 United miles + $56\nFlight UA9837 departs at 11:20am. March 3, 10, 17, 23 and 24 showed seats. This search found 36 nonstops in total but only showed 20, so there are likely more United dates in April and May.\n\n### Cheapest: 85,000 Aeroplan points + about CAD $101, but with a stop\nThis 1-stop routing (UA9857 then ANA's NH9920) has seats on most days from March through May. However, it's **mixed cabin: about 15% of the distance is in a lower cabin than business.** You'd save only 2\u20133k points over a nonstop.\n\n### Before you book\n- **How many travelers?** You said \"each.\" Most of these flights show only 1\u20132 seats, especially the ANA nonstops. The Aeroplan routing and United's March 3, 17 and 24 flights show 3 or more. If you tell me how many seats you need, I'll search again for flights that have enough seats on the same flight.\n- **These results are one-way to Tokyo.** I haven't searched return flights yet.\n- **Confirm before transferring points.** This data was last updated about 2 hours ago, and award seats can disappear quickly. Check that the seat is still bookable on the program's own site (LifeMiles, United or Aeroplan) before you move points. Transfers usually can't be undone.",
+          "model": "claude-opus-5-5",
+          "seconds": 22.1
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origins_include_sfo",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "tokyo_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "spring_dates",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "NRT",
+                "HND"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "NRT",
+                "HND"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000,
+              "direct_only": true
+            }
+          ],
+          "answer": "There's plenty of business award space from San Francisco to Tokyo this spring under 90k points per seat. I searched SFO to both Tokyo airports (Narita and Haneda), March 1 to May 31, 2027, one way. All of this was last updated about 2 hours ago.\n\n**Best pick: nonstop on ANA, booked with LifeMiles, 87,000 points + $41 per seat**\nFully business class, from SFO to Haneda (closer to central Tokyo), leaving at 1:25am. The spread is good across all three months:\n\n| Seats available | Dates |\n|---|---|\n| 2 | Mar 26, Apr 8, Apr 24, May 7, May 23 |\n| 1 | Mar 16, Mar 22, Apr 7, Apr 10, Apr 19, May 5, May 10, May 19, May 20, May 26 |\n\n**Also nonstop: United, booked with United miles, 88,000 points + $56 per seat**\nSFO to Narita, leaving at 11:20am, which is an easier departure time than the 1:25am ANA flight.\n- 3 seats: Mar 3, Mar 17, Mar 24\n- 1 seat: Mar 10, Mar 23\n\n**Cheapest, but not fully business: Aeroplan, 85,000 points + about CA$101 per seat**\nUnited connecting to ANA, with one stop. About 15% of the distance is in a lower cabin, probably the short first flight. It's only 2,000\u20133,000 points cheaper, so I'd take one of the nonstops. Up to 4 seats on Mar 3 and Mar 4 to Narita, and 2\u20133 seats on many other March dates.\n\n**Things to check:**\n- **How many people are travelling?** You said \"each\", so if there are two of you, stick to the dates with 2 or more seats above. For 3 or more, the United dates with 3 seats (Mar 3, 17, 24) are the only nonstops that fit.\n- **I only saw part of the results.** The search returns at most 20 flights. I saw 20 of 36 nonstops (some United April and May dates weren't shown) and 20 of 102 flights overall (all early-to-late March). If you give me narrower dates, I can show everything in that window.\n- **Check before you transfer points.** This data can go out of date, and transfers usually can't be undone. Confirm the seat on the program's own site (LifeMiles, United or Aeroplan) first.\n\nI can also look for return flights, search for a specific number of seats, or narrow it to cherry blossom season (late March to early April).",
+          "model": "claude-opus-5-5",
+          "seconds": 21.2
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origins_include_sfo",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "tokyo_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "spring_dates",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000,
+              "seats": 2
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000,
+              "seats": 2,
+              "direct_only": true
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-04-02",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000,
+              "seats": 2
+            }
+          ],
+          "answer": "I found plenty of business seats from San Francisco to Tokyo under 90k points each. Nonstop flights cost 87\u201388k per person, only 2\u20133k more than the cheapest option.\n\n**What I searched:** one-way from SFO to Haneda (HND) or Narita (NRT), March 1 \u2013 May 31, 2027, with at least **2 seats** on the same flight. You said \"each,\" so I assumed at least two people. Tell me the actual number, or if you need a return flight, and I'll search again.\n\n### My pick: nonstop, all business class\n\n| Program | Flight | Route | Points/seat | Taxes/seat | Spring dates (\u22652 seats) |\n|---|---|---|---|---|---|\n| **LifeMiles** | ANA NH9107, leaves 01:25 | SFO\u2192HND | 87,000 | $41 | Mar 26, Apr 8, Apr 24, May 7, May 23 |\n| **United** | UA9837, leaves 11:20 | SFO\u2192NRT | 88,000 | $56 | Mar 3, 17, 24 \u00b7 Apr 6, 8, 18, 23 \u00b7 May 3, 5, 10, 19, 20, 22, 25 |\n\n- **The ANA flight lands at Haneda**, which is much closer to central Tokyo than Narita. It leaves at 1:25 am, so you'd be heading to SFO late the night before.\n- **United has more dates** and a normal daytime departure, but it lands at Narita.\n- **For cherry blossom season (late March to early April):** ANA has Mar 26 and Apr 8, and United has Mar 24, Apr 6 and Apr 8.\n\n### Cheapest: 85k with Aeroplan, but with a catch\nAir Canada's Aeroplan program has United + ANA itineraries for **85,000 points + about CA$101 per seat** on many spring dates, to either airport. These have **one stop**, and about **15% of the distance is flown in a lower cabin**. You'd save only 2\u20133k points per person, so I'd book a nonstop unless that saving really matters to you.\n\n### Before you transfer any points\nThis data was updated about 2 hours ago, but award seats can disappear quickly. Check that the seats are still there on the program's own site (LifeMiles, United or Aeroplan) before you move points. Transfers usually can't be undone.",
+          "model": "claude-opus-5-5",
+          "seconds": 24.0
+        }
+      ]
+    },
+    {
+      "name": "no_availability",
+      "passed": true,
+      "runs": [
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "cabin_first",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "reports_no_seats",
+              "passed": true,
+              "detail": "The answer reports that all three searches ran successfully and found no seats, without claiming a search failed or inventing any flights, which matches the rule."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "first"
+            },
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-14",
+              "end_date": "2027-07-20",
+              "cabin": "first"
+            },
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "business"
+            }
+          ],
+          "answer": "There are no first class award seats from Nice (NCE) to Los Angeles (LAX) on July 17, 2027. All three searches ran successfully and found nothing:\n\n- **First class, July 17:** no seats\n- **First class, July 14\u201320:** no seats\n- **Business class, July 17:** no seats\n\nJuly 17 is about 8 months away, which is inside most airlines' booking windows. So this probably reflects what's actually available now, not seats that haven't been released yet. Award seats do open up again over time, though, and some airlines release more first class space close to the departure date.\n\nTo find more options, I could:\n- **Search from other airports:** Paris (CDG), London (LHR), Frankfurt (FRA) or Zurich (ZRH) have more long-haul flights, and you could take a cheap flight from Nice to get there.\n- **Add other Los Angeles-area airports** as destinations, but very few long-haul flights land anywhere except LAX.\n- **Check premium economy or economy** for July 17.\n\nDo you want me to run any of these?",
+          "model": "claude-opus-5-5",
+          "seconds": 20.9
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "cabin_first",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "reports_no_seats",
+              "passed": true,
+              "detail": "The answer reports that all three searches ran without errors and found no seats, without claiming the search failed or inventing any flights."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "first"
+            },
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-14",
+              "end_date": "2027-07-20",
+              "cabin": "first"
+            },
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "business"
+            }
+          ],
+          "answer": "I found no first class award seats from Nice (NCE) to Los Angeles (LAX) on July 17, 2027. All three searches finished without errors:\n\n- **First class, July 17:** no seats.\n- **First class, July 14\u201320:** no seats on any of those days.\n- **Business class, July 17:** no seats.\n\nJuly 17 is about eight months away, so most airlines have released their award seats for that date. But Seats.aero only shows what it has stored, and airlines often add more seats closer to departure, so check again later.\n\nThere are no non-stop flights from Nice to Los Angeles, so any trip will connect somewhere. I could look for first class from Paris (CDG), London (LHR) or Frankfurt (FRA) to LAX and pair it with a short flight from Nice. I could also search a wider range of dates. Do you want me to try either?",
+          "model": "claude-opus-5-5",
+          "seconds": 20.1
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "cabin_first",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "reports_no_seats",
+              "passed": true,
+              "detail": "The answer reports that all three searches ran without errors and found no seats, without claiming a failure or listing any invented flights."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "first"
+            },
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-14",
+              "end_date": "2027-07-20",
+              "cabin": "first"
+            },
+            {
+              "origins": [
+                "NCE"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "business"
+            }
+          ],
+          "answer": "I couldn't find any award seats from Nice (NCE) to Los Angeles (LAX) on July 17, 2027. All three searches ran without errors:\n\n- **First class on July 17:** nothing found\n- **First class from July 14 to 20:** nothing found\n- **Business class on July 17:** nothing found\n\nThere's no nonstop between these two cities, so any award would connect somewhere, likely Paris, London or a US hub. The searches would have included connecting flights, but none showed up.\n\nOptions from here:\n1. Look for business class over a wider date range.\n2. Search from Paris (CDG) or London (LHR) to LAX and book a separate flight from Nice to get there.\n3. Add other LA-area airports or nearby cities, such as SFO, if that works for you.\n\nWant me to try any of these?",
+          "model": "claude-opus-5-5",
+          "seconds": 18.7
+        }
+      ]
+    },
+    {
+      "name": "seats_aero_outage",
+      "passed": true,
+      "runs": [
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer says the check could not be completed because the search tool returned a server error, states that this does not mean there are no seats, and never claims availability is absent."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            },
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "answer": "I couldn't check premium economy award seats from London to LA for July 17, 2027. The search failed twice because Seats.aero returned a server error (HTTP 500). That's a problem on their end, so it doesn't mean there are no seats.\n\nI searched Heathrow and Gatwick to LAX for one seat on any loyalty program. I can try again in a bit, or change the search when I do:\n- **Dates:** search a few days either side of July 17.\n- **Programs:** limit it to the programs you have points in, such as British Airways Avios, Virgin Atlantic or Flying Blue.\n- **Seats:** search for more than one seat if others are travelling with you.",
+          "model": "claude-opus-5-5",
+          "seconds": 16.9
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer states that the search failed with an HTTP 500 error, says plainly that this does not mean there are no seats, and never claims availability is absent."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            },
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "answer": "I couldn't check award availability for premium economy from London (Heathrow and Gatwick) to LAX on July 17, 2027. Seats.aero returned a server error (HTTP 500) both times I tried. That doesn't mean there are no seats. The search just didn't run.\n\nYou can ask me to try again later. I can also widen the search to a few dates around the 17th, add Burbank or Long Beach, or include other cabins.",
+          "model": "claude-opus-5-5",
+          "seconds": 15.3
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer states plainly that the check could not run because the search tool returned HTTP 500 twice, so it never says there are no seats and makes clear availability is unknown."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            },
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "answer": "I couldn't check premium economy award seats from London to LA for July 17, 2027. The search tool's provider, Seats.aero, returned a server error (HTTP 500) twice in a row. That means the search never ran, so we don't know yet whether any seats are available.\n\nI searched Heathrow (LHR) and Gatwick (LGW) to LAX. Should I try again in a bit? I can also widen it to a few days around the 17th, or add other LA-area airports such as Burbank (BUR) or Long Beach (LGB).",
+          "model": "claude-opus-5-5",
+          "seconds": 16.7
+        }
+      ]
+    },
+    {
+      "name": "bad_api_key",
+      "passed": true,
+      "runs": [
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer says the search never ran because of a 401 from Seats.aero, states that this means availability is unknown rather than absent, and never claims there are no seats."
+            },
+            {
+              "name": "mentions_the_key",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW",
+                "STN",
+                "LCY",
+                "LTN"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "answer": "I couldn't check award seats. The search for premium economy from London (LHR, LGW, STN, LCY, LTN) to LAX on 17 July 2027 didn't run because Seats.aero rejected the API key (HTTP 401). That means we don't know whether seats are available, not that there are none.\n\nFixing it needs a valid Seats.aero API key in the award-search server's settings, which I can't change from here. Once the key is updated, ask me again and I'll run the same search. I can also widen it to a few days on either side of the 17th.\n\nThe date may also be too far out: 17 July 2027 is about 8 months away. Many airlines only open award seats about 330\u2013355 days before departure, so some may not be bookable yet.",
+          "model": "claude-opus-5-5",
+          "seconds": 14.5
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer states that the check could not run because the Seats.aero API key was rejected (HTTP 401), and it explicitly says this does not mean there are no seats, so it does not claim availability is absent."
+            },
+            {
+              "name": "mentions_the_key",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW",
+                "STN",
+                "LCY",
+                "LTN"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "answer": "I couldn't check premium economy seats from London to LA for July 17, 2027. The search didn't run because Seats.aero rejected the API key (HTTP 401). That doesn't mean there are no seats, just that nothing was searched.\n\nTo fix it, check or replace the Seats.aero API key in the award-search server's settings, then restart the server. Once that's done, I'll run it again. I'll search all the London airports (Heathrow, Gatwick, Stansted, City and Luton) to LAX, and I can add other LA-area airports like Burbank, Long Beach or Ontario if you want.",
+          "model": "claude-opus-5-5",
+          "seconds": 13.9
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer states plainly that the search could not run because of a 401 authentication failure, so it makes no claim that seats are absent, and it correctly says the result is unknown until the key is fixed."
+            },
+            {
+              "name": "mentions_the_key",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW",
+                "STN",
+                "LCY",
+                "LTN"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "answer": "I couldn't check award seats for this. The search didn't run because Seats.aero rejected the API key (HTTP 401). That's a login problem, so it doesn't tell us whether any seats are available, and running it again won't help until the key is fixed.\n\nYou'll need to update the Seats.aero API key in the award-search tool's settings. Once that's done, I'll rerun the same search: premium economy from all London airports (Heathrow, Gatwick, Stansted, City and Luton) to LAX on 17 July 2027.\n\nAlso, July 2027 is about 8 months away, and some airlines haven't opened award seats that far ahead yet. If nothing shows up after the fix, it may just be too early to book.",
+          "model": "claude-opus-5-5",
+          "seconds": 14.8
+        }
+      ]
+    },
+    {
+      "name": "old_data",
+      "passed": true,
+      "runs": [
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "two_seats",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "warns_data_is_old",
+              "passed": true,
+              "detail": "The answer warns that Seats.aero last saw the flights about 5 days ago, says seats may be gone, and tells the user to check the airline's site before transferring points, which meets the rule."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium",
+              "seats": 2
+            }
+          ],
+          "answer": "I found 3 nonstop premium economy flights from Heathrow to LAX on 17 July 2027 with space for 2. **Seats.aero last saw all of them about 5 days ago (9 Nov), so some may be gone.** Check the airline's site before you transfer any points.\n\n| Departs (London time) | Flight | Program | Points per person | Points for 2 | Taxes shown | Seats left |\n|---|---|---|---|---|---|---|\n| 09:55 | VS9007 (nonstop) | Virgin Atlantic Flying Club | 55,000 | **110,000** | \u00a3493.63 | 8 |\n| 16:20 | VS9023 (nonstop) | Virgin Atlantic Flying Club | 58,000 | 116,000 | \u00a3493.63 | 9 |\n| 16:25 | AA9135 (nonstop) | American AAdvantage | 88,000 | 176,000 | $435.39 | Unknown |\n\n**Best option:** the 09:55 Virgin Atlantic flight costs the fewest points, at 110,000 for both of you. The results don't say whether the taxes are per person or for both. If they're per person, budget about \u00a3987 for two.\n\nThe American AAdvantage booking costs a lot more points, and Seats.aero doesn't know how many seats are left on it.\n\nSearch link: https://seats.aero/search?origin=LHR&destination=LAX&date=2027-07-17\n\nI can also search nearby dates or Gatwick if you're flexible.",
+          "model": "claude-opus-5-5",
+          "seconds": 17.1
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "two_seats",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "warns_data_is_old",
+              "passed": true,
+              "detail": "The answer warns that all three results were last checked about 5 days ago so the seats may be gone, and it tells the user to confirm on the airline's site before transferring points."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium",
+              "seats": 2
+            }
+          ],
+          "answer": "I found 3 nonstop premium economy award options from Heathrow to LAX on 17 July 2027 for 2 people:\n\n| Departs (London time) | Flight | Program | Points per person | Points for 2 | Taxes shown | Seats left |\n|---|---|---|---|---|---|---|\n| 09:55 | VS9007 | Virgin Atlantic Flying Club | 55,000 | **110,000** | \u00a3493.63 | 8 |\n| 16:20 | VS9023 | Virgin Atlantic Flying Club | 58,000 | 116,000 | \u00a3493.63 | 9 |\n| 16:25 | AA9135 | American AAdvantage | 88,000 | 176,000 | $435.39 | Not known |\n\n**Best option:** the Virgin Atlantic 09:55 flight at 110,000 points for both of you. The Virgin flight at 16:20 is close behind at 116,000 points. The American option costs about 60% more points.\n\n**Before you move any points:**\n- **This data may be out of date.** All three results were last checked about 5 days ago (9 Nov), so some seats may be gone. Check the date on the Virgin Atlantic or American website first. Points transfers usually can't be undone.\n- **Taxes:** the results don't say whether the taxes are per person or for both of you. On UK departures they're usually per person, so plan on about \u00a3990 total for Virgin. The booking site will show the real amount.\n- **American seats:** the data doesn't say how many seats are open on the American flight, so 2 together isn't confirmed.\n\nYou can view the results here: https://seats.aero/search?origin=LHR&destination=LAX&date=2027-07-17\n\nI can also search nearby dates or other London airports like Gatwick if you're flexible.",
+          "model": "claude-opus-5-5",
+          "seconds": 18.3
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "two_seats",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "warns_data_is_old",
+              "passed": true,
+              "detail": "The answer warns that the results were last checked 5 days ago, says the seats may already be gone, and tells the user to confirm on virginatlantic.com before transferring points."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium",
+              "seats": 2
+            }
+          ],
+          "answer": "I found 3 nonstop premium economy options from Heathrow to LAX on Saturday, 17 July 2027 for 2 people:\n\n| Program | Flight | Departs (London time) | Points per person | Points for 2 | Taxes shown | Seats left |\n|---|---|---|---|---|---|---|\n| Virgin Atlantic | VS9007 | 09:55 | 55,000 | **110,000** | \u00a3493.63 | 8 |\n| Virgin Atlantic | VS9023 | 16:20 | 58,000 | 116,000 | \u00a3493.63 | 9 |\n| American AAdvantage | AA9135 | 16:25 | 88,000 | 176,000 | $435.39 | not known |\n\n**The best option is VS9007 with Virgin Atlantic points.** It's the cheapest in points and leaves in the morning, so you land in LA the same day.\n\n**Things to check before booking:**\n- **The data may be out of date.** These results were last checked 5 days ago (9 Nov), so the seats may already be gone. Check on virginatlantic.com before you move any points into Virgin. Moving points usually can't be undone.\n- **Taxes:** the results don't say whether the tax amount is per person or for both of you. Expect to pay it per person, so about \u00a3987 for two on Virgin. The fees are high because Virgin passes on its fuel surcharges.\n- **Seats on the American option:** the data doesn't say how many seats are left on AA9135. The number shown in AA is also much higher than on VS9007, so it's only worth considering if the Virgin seats are gone.\n\nYou can see all the results here: https://seats.aero/search?origin=LHR&destination=LAX&date=2027-07-17",
+          "model": "claude-opus-5-5",
+          "seconds": 17.9
+        }
+      ]
+    }
+  ]
+}

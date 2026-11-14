@@ -24,6 +24,7 @@ Terms used here are defined in `GLOSSARY.md`.
 - **Data can be out of date.** Every result shows when it was last seen, and the output tells the agent to suggest confirming on the loyalty program's site before transferring points.
 - **The API key stays on the server** and never reaches the model.
 - **Python with the official MCP Python SDK.** Tests use saved fake API responses and never hit the network.
+- **Fixtures are made up.** Seats.aero's terms (updated August 12, 2026) say flights more than 60 days out can't be shown publicly, and this repo is public. So test and eval fixtures are invented flights in Seats.aero's response format, and real responses are only used locally to learn the format. History was rewritten on November 14, 2026 to remove the real responses committed before this rule.
 - **Runs on my laptop first.** AWS hosting is an optional final stage if costs stay low.
 
 ## Stages
@@ -82,7 +83,7 @@ A real broad search through `claude -p` showed Claude passing on the new warning
 **Write-up:** `evals/` has 8 cases: vague dates with a points limit, a missing destination, cities and party size, a season, no availability, an outage, a bad key and old data. `python -m evals.run_evals --repeat 3` runs each case through `claude -p` against a fake Seats.aero, saves the results in `evals/results/` and shows what changed since the last run. Each case runs in an empty folder with only our tool available, so this repo's CLAUDE.md can't steer it, and the server gets a made-up key, so evals never use the real API. Most checks are plain code on the tool arguments. Four rules that code can't judge reliably, such as "doesn't present a failure as no seats", are graded by a second Claude call (Haiku). The first run found real variation: for "anything from Nice in mid-July?", Claude sometimes guessed 12 destinations instead of asking. I added "ask instead of guessing airports" to the tool description, and it then passed 3/3, with all 8 cases passing 3/3. To check that the evals can actually fail, I temporarily made failed searches report "no award seats". Claude still said it couldn't check, because it also saw `status: failed`, but it lost the reason, and the bad key case failed as it should.
 
 ### 7. Host it on AWS (optional)
-- [ ] Check that the Seats.aero terms and API quota allow this use.
+- [x] Check that the Seats.aero terms and API quota allow this use. Checked November 14, 2026: personal, non-commercial use is allowed without permission; a Pro subscription "may not be shared with others"; the quota is 1,000 API calls per day; and data must be credited to Seats.aero with a link. Hosting is fine only if I'm the sole user.
 - [ ] Estimate the monthly cost before deploying.
 - [ ] Host it over HTTP with authentication.
 
@@ -91,9 +92,9 @@ A real broad search through `claude -p` showed Claude passing on the new warning
 ## Backlog
 
 - **The cap can hide most of a date range or whole airports.** The 20 slots go to the cheapest results, so a cheaper date or origin can crowd out the rest. With SFO→Tokyo in spring, all 20 were in March. With London or Tokyo to LA or New York, all 20 were from London and Tokyo didn't appear. Claude noticed both times and offered narrower searches. One possible fix is the cheapest few per date or per route. That would change the "top 20 by points" decision, so ask first.
+- **Claude sometimes repeats the exact same search.** In one eval run it called `search_award_seats` twice with identical arguments. Each call costs one of the 1,000 daily API calls. A short cache in the server, or a line in the tool description, could stop this.
 - **Connection airports aren't shown.** Trips have a `Connections` field, but results leave it out. Claude guessed a connection city for a mixed cabin flight and flagged it as a guess. Showing connections would remove the guesswork.
 - **The monitor hides American seats.** `seats-aero-monitor`'s `flight_qualifies` treats `RemainingSeats: 0` as no seats, but for American it means unknown. That's for the owner to decide, since the monitor isn't changed from here.
-- **Real fixture for mixed cabin.** Replace the hand-written `nce_lax_mixed_cabin.json` with a saved real response.
 
 ## Later ideas
 
