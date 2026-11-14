@@ -1,0 +1,739 @@
+{
+ "data": [
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-08",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 2,
+   "WAirlines": "AF, KL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9321, AF9020",
+     "Cabin": "premium",
+     "RemainingSeats": 2,
+     "MileageCost": 98000,
+     "TotalTaxes": 35230,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-08T06:10:00Z",
+     "ArrivesAt": "2027-07-08T19:20:00Z",
+     "TotalDuration": 790,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    },
+    {
+     "FlightNumbers": "KL9472, KL9601",
+     "Cabin": "premium",
+     "RemainingSeats": 2,
+     "MileageCost": 98000,
+     "TotalTaxes": 36010,
+     "TaxesCurrency": "USD",
+     "Carriers": "KL",
+     "Stops": 1,
+     "Connections": [
+      "AMS"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-08T06:25:00Z",
+     "ArrivesAt": "2027-07-08T20:00:00Z",
+     "TotalDuration": 815,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-09",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 7,
+   "WAirlines": "AF, KL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9321, AF9020",
+     "Cabin": "premium",
+     "RemainingSeats": 7,
+     "MileageCost": 98000,
+     "TotalTaxes": 35230,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-09T06:10:00Z",
+     "ArrivesAt": "2027-07-09T19:20:00Z",
+     "TotalDuration": 790,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    },
+    {
+     "FlightNumbers": "KL9472, KL9601",
+     "Cabin": "premium",
+     "RemainingSeats": 2,
+     "MileageCost": 112000,
+     "TotalTaxes": 36010,
+     "TaxesCurrency": "USD",
+     "Carriers": "KL",
+     "Stops": 1,
+     "Connections": [
+      "AMS"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-09T06:25:00Z",
+     "ArrivesAt": "2027-07-09T20:00:00Z",
+     "TotalDuration": 815,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-11",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 6,
+   "WAirlines": "AF, KL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9321, AF9020",
+     "Cabin": "premium",
+     "RemainingSeats": 6,
+     "MileageCost": 98000,
+     "TotalTaxes": 35230,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-11T06:10:00Z",
+     "ArrivesAt": "2027-07-11T19:20:00Z",
+     "TotalDuration": 790,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    },
+    {
+     "FlightNumbers": "KL9472, KL9601",
+     "Cabin": "premium",
+     "RemainingSeats": 2,
+     "MileageCost": 112000,
+     "TotalTaxes": 36010,
+     "TaxesCurrency": "USD",
+     "Carriers": "KL",
+     "Stops": 1,
+     "Connections": [
+      "AMS"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-11T06:25:00Z",
+     "ArrivesAt": "2027-07-11T20:00:00Z",
+     "TotalDuration": 815,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-12",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 9,
+   "WAirlines": "AF, KL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9321, AF9020",
+     "Cabin": "premium",
+     "RemainingSeats": 9,
+     "MileageCost": 98000,
+     "TotalTaxes": 35230,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-12T06:10:00Z",
+     "ArrivesAt": "2027-07-12T19:20:00Z",
+     "TotalDuration": 790,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    },
+    {
+     "FlightNumbers": "KL9472, KL9601",
+     "Cabin": "premium",
+     "RemainingSeats": 1,
+     "MileageCost": 112000,
+     "TotalTaxes": 36010,
+     "TaxesCurrency": "USD",
+     "Carriers": "KL",
+     "Stops": 1,
+     "Connections": [
+      "AMS"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-12T06:25:00Z",
+     "ArrivesAt": "2027-07-12T20:00:00Z",
+     "TotalDuration": 815,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "delta"
+   },
+   "Date": "2027-07-13",
+   "WAvailable": true,
+   "WMileageCost": "125000",
+   "WRemainingSeats": 1,
+   "WAirlines": "AF, DL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "delta",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9323, DL9255",
+     "Cabin": "premium",
+     "RemainingSeats": 1,
+     "MileageCost": 125000,
+     "TotalTaxes": 5600,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF, DL",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-13T09:40:00Z",
+     "ArrivesAt": "2027-07-13T23:45:00Z",
+     "TotalDuration": 845,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "delta"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-13",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 6,
+   "WAirlines": "AF, KL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9321, AF9020",
+     "Cabin": "premium",
+     "RemainingSeats": 5,
+     "MileageCost": 98000,
+     "TotalTaxes": 35230,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-13T06:10:00Z",
+     "ArrivesAt": "2027-07-13T19:20:00Z",
+     "TotalDuration": 790,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    },
+    {
+     "FlightNumbers": "KL9472, KL9601",
+     "Cabin": "premium",
+     "RemainingSeats": 6,
+     "MileageCost": 112000,
+     "TotalTaxes": 36010,
+     "TaxesCurrency": "USD",
+     "Carriers": "KL",
+     "Stops": 1,
+     "Connections": [
+      "AMS"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-13T06:25:00Z",
+     "ArrivesAt": "2027-07-13T20:00:00Z",
+     "TotalDuration": 815,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-14",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 5,
+   "WAirlines": "AF, KL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9321, AF9020",
+     "Cabin": "premium",
+     "RemainingSeats": 2,
+     "MileageCost": 98000,
+     "TotalTaxes": 35230,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-14T06:10:00Z",
+     "ArrivesAt": "2027-07-14T19:20:00Z",
+     "TotalDuration": 790,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    },
+    {
+     "FlightNumbers": "KL9472, KL9601",
+     "Cabin": "premium",
+     "RemainingSeats": 5,
+     "MileageCost": 112000,
+     "TotalTaxes": 36010,
+     "TaxesCurrency": "USD",
+     "Carriers": "KL",
+     "Stops": 1,
+     "Connections": [
+      "AMS"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-14T06:25:00Z",
+     "ArrivesAt": "2027-07-14T20:00:00Z",
+     "TotalDuration": 815,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-15",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 6,
+   "WAirlines": "AF, KL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9321, AF9020",
+     "Cabin": "premium",
+     "RemainingSeats": 5,
+     "MileageCost": 98000,
+     "TotalTaxes": 35230,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-15T06:10:00Z",
+     "ArrivesAt": "2027-07-15T19:20:00Z",
+     "TotalDuration": 790,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    },
+    {
+     "FlightNumbers": "KL9472, KL9601",
+     "Cabin": "premium",
+     "RemainingSeats": 6,
+     "MileageCost": 98000,
+     "TotalTaxes": 36010,
+     "TaxesCurrency": "USD",
+     "Carriers": "KL",
+     "Stops": 1,
+     "Connections": [
+      "AMS"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-15T06:25:00Z",
+     "ArrivesAt": "2027-07-15T20:00:00Z",
+     "TotalDuration": 815,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-16",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 3,
+   "WAirlines": "AF, KL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9321, AF9020",
+     "Cabin": "premium",
+     "RemainingSeats": 2,
+     "MileageCost": 98000,
+     "TotalTaxes": 35230,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-16T06:10:00Z",
+     "ArrivesAt": "2027-07-16T19:20:00Z",
+     "TotalDuration": 790,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    },
+    {
+     "FlightNumbers": "KL9472, KL9601",
+     "Cabin": "premium",
+     "RemainingSeats": 3,
+     "MileageCost": 112000,
+     "TotalTaxes": 36010,
+     "TaxesCurrency": "USD",
+     "Carriers": "KL",
+     "Stops": 1,
+     "Connections": [
+      "AMS"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-16T06:25:00Z",
+     "ArrivesAt": "2027-07-16T20:00:00Z",
+     "TotalDuration": 815,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-17",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 8,
+   "WAirlines": "AF, KL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9321, AF9020",
+     "Cabin": "premium",
+     "RemainingSeats": 8,
+     "MileageCost": 98000,
+     "TotalTaxes": 35230,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-17T06:10:00Z",
+     "ArrivesAt": "2027-07-17T19:20:00Z",
+     "TotalDuration": 790,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    },
+    {
+     "FlightNumbers": "KL9472, KL9601",
+     "Cabin": "premium",
+     "RemainingSeats": 5,
+     "MileageCost": 98000,
+     "TotalTaxes": 36010,
+     "TaxesCurrency": "USD",
+     "Carriers": "KL",
+     "Stops": 1,
+     "Connections": [
+      "AMS"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-17T06:25:00Z",
+     "ArrivesAt": "2027-07-17T20:00:00Z",
+     "TotalDuration": 815,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-18",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 1,
+   "WAirlines": "KL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "KL9472, KL9601",
+     "Cabin": "premium",
+     "RemainingSeats": 1,
+     "MileageCost": 98000,
+     "TotalTaxes": 36010,
+     "TaxesCurrency": "USD",
+     "Carriers": "KL",
+     "Stops": 1,
+     "Connections": [
+      "AMS"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-18T06:25:00Z",
+     "ArrivesAt": "2027-07-18T20:00:00Z",
+     "TotalDuration": 815,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "delta"
+   },
+   "Date": "2027-07-20",
+   "WAvailable": true,
+   "WMileageCost": "125000",
+   "WRemainingSeats": 2,
+   "WAirlines": "AF, DL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "delta",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9323, DL9255",
+     "Cabin": "premium",
+     "RemainingSeats": 2,
+     "MileageCost": 125000,
+     "TotalTaxes": 5600,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF, DL",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-20T09:40:00Z",
+     "ArrivesAt": "2027-07-20T23:45:00Z",
+     "TotalDuration": 845,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "delta"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-21",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 8,
+   "WAirlines": "AF, KL",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9321, AF9020",
+     "Cabin": "premium",
+     "RemainingSeats": 8,
+     "MileageCost": 98000,
+     "TotalTaxes": 35230,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-21T06:10:00Z",
+     "ArrivesAt": "2027-07-21T19:20:00Z",
+     "TotalDuration": 790,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    },
+    {
+     "FlightNumbers": "KL9472, KL9601",
+     "Cabin": "premium",
+     "RemainingSeats": 3,
+     "MileageCost": 98000,
+     "TotalTaxes": 36010,
+     "TaxesCurrency": "USD",
+     "Carriers": "KL",
+     "Stops": 1,
+     "Connections": [
+      "AMS"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-21T06:25:00Z",
+     "ArrivesAt": "2027-07-21T20:00:00Z",
+     "TotalDuration": 815,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "NCE",
+    "DestinationAirport": "LAX",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-07-22",
+   "WAvailable": true,
+   "WMileageCost": "98000",
+   "WRemainingSeats": 6,
+   "WAirlines": "AF",
+   "WDirect": false,
+   "TaxesCurrency": "USD",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9321, AF9020",
+     "Cabin": "premium",
+     "RemainingSeats": 6,
+     "MileageCost": 98000,
+     "TotalTaxes": 35230,
+     "TaxesCurrency": "USD",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "NCE",
+     "DestinationAirport": "LAX",
+     "DepartsAt": "2027-07-22T06:10:00Z",
+     "ArrivesAt": "2027-07-22T19:20:00Z",
+     "TotalDuration": 790,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue"
+    }
+   ]
+  }
+ ],
+ "count": 14,
+ "hasMore": false,
+ "cursor": 0
+}

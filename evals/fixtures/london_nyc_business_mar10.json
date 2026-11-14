@@ -1,0 +1,282 @@
+{
+ "data": [
+  {
+   "Route": {
+    "OriginAirport": "LGW",
+    "DestinationAirport": "JFK",
+    "Source": "british"
+   },
+   "Date": "2027-03-10",
+   "JAvailable": true,
+   "JMileageCost": "68000",
+   "JRemainingSeats": 3,
+   "JAirlines": "BA",
+   "JDirect": true,
+   "TaxesCurrency": "GBP",
+   "Source": "british",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "BA9183",
+     "Cabin": "business",
+     "RemainingSeats": 3,
+     "MileageCost": 68000,
+     "TotalTaxes": 85300,
+     "TaxesCurrency": "GBP",
+     "Carriers": "BA",
+     "Stops": 0,
+     "Connections": [],
+     "OriginAirport": "LGW",
+     "DestinationAirport": "JFK",
+     "DepartsAt": "2027-03-10T11:15:00Z",
+     "ArrivesAt": "2027-03-10T19:15:00Z",
+     "TotalDuration": 480,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "british"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "LGW",
+    "DestinationAirport": "JFK",
+    "Source": "flyingblue"
+   },
+   "Date": "2027-03-10",
+   "JAvailable": true,
+   "JMileageCost": "85000",
+   "JRemainingSeats": 5,
+   "JAirlines": "AF",
+   "JDirect": false,
+   "TaxesCurrency": "EUR",
+   "Source": "flyingblue",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AF9181, AF9008",
+     "Cabin": "business",
+     "RemainingSeats": 5,
+     "MileageCost": 85000,
+     "TotalTaxes": 24300,
+     "TaxesCurrency": "EUR",
+     "Carriers": "AF",
+     "Stops": 1,
+     "Connections": [
+      "CDG"
+     ],
+     "OriginAirport": "LGW",
+     "DestinationAirport": "JFK",
+     "DepartsAt": "2027-03-10T07:00:00Z",
+     "ArrivesAt": "2027-03-10T18:30:00Z",
+     "TotalDuration": 690,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "flyingblue",
+     "MixedCabinPct": 14
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "LHR",
+    "DestinationAirport": "EWR",
+    "Source": "aeroplan"
+   },
+   "Date": "2027-03-10",
+   "JAvailable": true,
+   "JMileageCost": "70000",
+   "JRemainingSeats": 2,
+   "JAirlines": "AC",
+   "JDirect": false,
+   "TaxesCurrency": "CAD",
+   "Source": "aeroplan",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AC9865, AC9718",
+     "Cabin": "business",
+     "RemainingSeats": 2,
+     "MileageCost": 70000,
+     "TotalTaxes": 21380,
+     "TaxesCurrency": "CAD",
+     "Carriers": "AC",
+     "Stops": 1,
+     "Connections": [
+      "YUL"
+     ],
+     "OriginAirport": "LHR",
+     "DestinationAirport": "EWR",
+     "DepartsAt": "2027-03-10T10:00:00Z",
+     "ArrivesAt": "2027-03-10T20:40:00Z",
+     "TotalDuration": 640,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "aeroplan"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "LHR",
+    "DestinationAirport": "EWR",
+    "Source": "united"
+   },
+   "Date": "2027-03-10",
+   "JAvailable": true,
+   "JMileageCost": "80000",
+   "JRemainingSeats": 6,
+   "JAirlines": "UA",
+   "JDirect": true,
+   "TaxesCurrency": "USD",
+   "Source": "united",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "UA9016",
+     "Cabin": "business",
+     "RemainingSeats": 6,
+     "MileageCost": 80000,
+     "TotalTaxes": 18920,
+     "TaxesCurrency": "USD",
+     "Carriers": "UA",
+     "Stops": 0,
+     "Connections": [],
+     "OriginAirport": "LHR",
+     "DestinationAirport": "EWR",
+     "DepartsAt": "2027-03-10T12:05:00Z",
+     "ArrivesAt": "2027-03-10T20:10:00Z",
+     "TotalDuration": 485,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "united"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "LHR",
+    "DestinationAirport": "JFK",
+    "Source": "american"
+   },
+   "Date": "2027-03-10",
+   "JAvailable": true,
+   "JMileageCost": "57500",
+   "JRemainingSeats": 0,
+   "JAirlines": "AA",
+   "JDirect": true,
+   "TaxesCurrency": "USD",
+   "Source": "american",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "AA9101",
+     "Cabin": "business",
+     "RemainingSeats": 0,
+     "MileageCost": 57500,
+     "TotalTaxes": 23440,
+     "TaxesCurrency": "USD",
+     "Carriers": "AA",
+     "Stops": 0,
+     "Connections": [],
+     "OriginAirport": "LHR",
+     "DestinationAirport": "JFK",
+     "DepartsAt": "2027-03-10T09:45:00Z",
+     "ArrivesAt": "2027-03-10T17:40:00Z",
+     "TotalDuration": 475,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "american"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "LHR",
+    "DestinationAirport": "JFK",
+    "Source": "british"
+   },
+   "Date": "2027-03-10",
+   "JAvailable": true,
+   "JMileageCost": "60000",
+   "JRemainingSeats": 1,
+   "JAirlines": "BA",
+   "JDirect": true,
+   "TaxesCurrency": "GBP",
+   "Source": "british",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "BA9117",
+     "Cabin": "business",
+     "RemainingSeats": 1,
+     "MileageCost": 60000,
+     "TotalTaxes": 85300,
+     "TaxesCurrency": "GBP",
+     "Carriers": "BA",
+     "Stops": 0,
+     "Connections": [],
+     "OriginAirport": "LHR",
+     "DestinationAirport": "JFK",
+     "DepartsAt": "2027-03-10T08:20:00Z",
+     "ArrivesAt": "2027-03-10T16:10:00Z",
+     "TotalDuration": 470,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "british"
+    }
+   ]
+  },
+  {
+   "Route": {
+    "OriginAirport": "LHR",
+    "DestinationAirport": "JFK",
+    "Source": "virginatlantic"
+   },
+   "Date": "2027-03-10",
+   "JAvailable": true,
+   "JMileageCost": "47500",
+   "JRemainingSeats": 4,
+   "JAirlines": "VS",
+   "JDirect": true,
+   "TaxesCurrency": "GBP",
+   "Source": "virginatlantic",
+   "UpdatedAt": "2026-11-14T00:00:00Z",
+   "AvailabilityTrips": [
+    {
+     "FlightNumbers": "VS9001",
+     "Cabin": "business",
+     "RemainingSeats": 4,
+     "MileageCost": 47500,
+     "TotalTaxes": 72060,
+     "TaxesCurrency": "GBP",
+     "Carriers": "VS",
+     "Stops": 0,
+     "Connections": [],
+     "OriginAirport": "LHR",
+     "DestinationAirport": "JFK",
+     "DepartsAt": "2027-03-10T08:30:00Z",
+     "ArrivesAt": "2027-03-10T16:20:00Z",
+     "TotalDuration": 470,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "virginatlantic"
+    },
+    {
+     "FlightNumbers": "VS9153",
+     "Cabin": "business",
+     "RemainingSeats": 2,
+     "MileageCost": 57500,
+     "TotalTaxes": 72060,
+     "TaxesCurrency": "GBP",
+     "Carriers": "VS",
+     "Stops": 0,
+     "Connections": [],
+     "OriginAirport": "LHR",
+     "DestinationAirport": "JFK",
+     "DepartsAt": "2027-03-10T16:10:00Z",
+     "ArrivesAt": "2027-03-11T00:05:00Z",
+     "TotalDuration": 475,
+     "UpdatedAt": "2026-11-14T00:00:00Z",
+     "Source": "virginatlantic"
+    }
+   ]
+  }
+ ],
+ "count": 7,
+ "hasMore": false,
+ "cursor": 0
+}

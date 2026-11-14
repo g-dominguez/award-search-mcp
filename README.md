@@ -33,3 +33,12 @@ export SEATS_AERO_API_KEY="$(security find-generic-password -a "$USER" -s seats-
 ```
 
 Start `claude` in this folder, approve the `award-search` server, and check it with `/mcp`.
+
+## Evals
+
+```sh
+.venv/bin/python -m evals.run_evals --repeat 3     # every case 3 times
+.venv/bin/python -m evals.run_evals old_data       # one case
+```
+
+Each case runs a prompt through `claude -p` against a fake Seats.aero (saved responses in `evals/fixtures/`), so no real API calls are made. Results are saved in `evals/results/` and compared with the previous run. A full `--repeat 3` run is 24 Claude conversations plus a few judge calls, so it uses some Claude usage.

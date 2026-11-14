@@ -94,7 +94,8 @@ def search_award_seats(
     """Search award seats (flights bookable with points or miles) between airports in a date range.
 
     Takes exact airport codes and dates only: turn "London" into ["LHR", "LGW"] and
-    "mid-July" into a date range before calling. Results are sorted by fewest points
+    "mid-July" into a date range before calling. If the user hasn't said where they're
+    flying from or to, ask them instead of guessing airports. Results are sorted by fewest points
     per seat and capped at 20. Flights with stops and mixed cabin flights (part of the
     distance in a lower cabin) are included and labelled. A status of "failed" means
     the search did not run, so never report it as "no seats".

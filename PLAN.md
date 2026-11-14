@@ -75,9 +75,11 @@ Terms used here are defined in `GLOSSARY.md`.
 A real broad search through `claude -p` showed Claude passing on the new warnings, for example "last seen about 5 days ago, so it's the most likely to be gone".
 
 ### 6. Add evals
-- [ ] Write 5-10 test prompts covering vague dates, no availability and a Seats.aero outage, plus a way to rerun them.
+- [x] Write 5-10 test prompts covering vague dates, no availability and a Seats.aero outage, plus a way to rerun them.
 
 **Done when:** the prompts can be rerun after a change and the results compared.
+
+**Write-up:** `evals/` has 8 cases: vague dates with a points limit, a missing destination, cities and party size, a season, no availability, an outage, a bad key and old data. `python -m evals.run_evals --repeat 3` runs each case through `claude -p` against a fake Seats.aero, saves the results in `evals/results/` and shows what changed since the last run. Each case runs in an empty folder with only our tool available, so this repo's CLAUDE.md can't steer it, and the server gets a made-up key, so evals never use the real API. Most checks are plain code on the tool arguments. Four rules that code can't judge reliably, such as "doesn't present a failure as no seats", are graded by a second Claude call (Haiku). The first run found real variation: for "anything from Nice in mid-July?", Claude sometimes guessed 12 destinations instead of asking. I added "ask instead of guessing airports" to the tool description, and it then passed 3/3, with all 8 cases passing 3/3. To check that the evals can actually fail, I temporarily made failed searches report "no award seats". Claude still said it couldn't check, because it also saw `status: failed`, but it lost the reason, and the bad key case failed as it should.
 
 ### 7. Host it on AWS (optional)
 - [ ] Check that the Seats.aero terms and API quota allow this use.
