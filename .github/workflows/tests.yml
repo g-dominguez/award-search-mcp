@@ -1,0 +1,26 @@
+# Runs the test suite on GitHub's machines for every push and pull request.
+# The tests use saved fixtures, so no API key or other secret is needed.
+# The evals aren't run here: they need Claude Code and use Claude usage.
+
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m pytest -v
