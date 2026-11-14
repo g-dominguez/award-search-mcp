@@ -1,0 +1,274 @@
+{
+  "started_at": "2026-11-14 13:11:07",
+  "model": "claude-opus-5-5",
+  "judge_model": "haiku",
+  "repeat": 3,
+  "cases": [
+    {
+      "name": "season_dates",
+      "passed": false,
+      "runs": [
+        {
+          "passed": false,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origins_include_sfo",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "tokyo_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "spring_dates",
+              "passed": false,
+              "detail": ""
+            },
+            {
+              "name": "covers_whole_spring",
+              "passed": true,
+              "detail": "The answer reports seats under 90k in March, April, and May, with specific dates in each month, so it satisfies the rule that seats are available across all three months."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "NRT",
+                "HND"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-03-31",
+              "cabin": "business",
+              "points_limit": 90000
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "NRT",
+                "HND"
+              ],
+              "start_date": "2027-04-01",
+              "end_date": "2027-04-30",
+              "cabin": "business",
+              "points_limit": 90000
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "NRT",
+                "HND"
+              ],
+              "start_date": "2027-05-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "NRT",
+                "HND"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000,
+              "direct_only": true
+            }
+          ],
+          "answer": "I searched SFO to Tokyo (Narita and Haneda) in business class from March 1 to May 31, 2027, with a limit of 90k points per seat. There are lots of seats, but the cheapest ones have a catch.\n\n## Cheapest: 85k Aeroplan, but with a stop and part of the trip in economy\n- **UA9857 + NH9920** (United, then ANA), leaves SFO at 12:55pm, available on most days in March, April and May\n- Taxes are about CA$101 per person\n- **One stop, and about 15% of the distance is flown in economy.** It's 85k per seat, but not fully business class.\n- Usually 1 to 4 seats per flight\n\n## Better: nonstop, fully business class\n**ANA via LifeMiles: 87k plus $41 per seat.** This is the NH9107 nonstop to Haneda, which leaves SFO at 1:25am.\n\n| Month | Dates (seats) |\n|---|---|\n| March | 16 (1), 22 (1), **26 (2)** |\n| April | 7 (1), **8 (2)**, 10 (1), 19 (1), **24 (2)** |\n| May | 5 (1), **7 (2)**, 10 (1), 19 (1), 20 (1), **23 (2)**, 26 (1) |\n\n**United via MileagePlus: 88k plus $56 per seat.** This is the UA9837 nonstop to Narita, which leaves SFO at 11:20am.\n- March 3 (3 seats), 10 (1), 17 (3), 23 (1), 24 (3)\n\nThe nonstop search found 36 matches, but the tool only shows 20. The other 16, probably more United dates in April and May, cost between 88k and 90k. I can search those months separately if you want.\n\n## My pick\nIf you can handle the 1:25am departure, take the **ANA nonstop through LifeMiles**. It's only 2k more than the one-stop flight and you're in business class the whole way. If you want a daytime departure or need 3 seats, take **United** in March.\n\n**How many people are travelling?** You said \"each,\" so I'm guessing more than one. Most ANA dates have only 1 or 2 seats, and United has up to 3 in March. Tell me the number and I'll filter to flights with that many seats.\n\nAll of this data was last updated about 2 hours ago. Before you transfer any points, check that the seats are still available on the airline program's own site.",
+          "model": "claude-opus-5-5",
+          "seconds": 22.9
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origins_include_sfo",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "tokyo_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "spring_dates",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "covers_whole_spring",
+              "passed": true,
+              "detail": "The answer reports seats in all three months: the ANA nonstop lists April and May dates alongside March, and the Aeroplan option says space runs \"from March through May.\" Its United section covers only March but flags that April and May may exist, so it doesn't say it doesn't know about those months."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "SFO",
+                "SJC",
+                "OAK"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000
+            },
+            {
+              "origins": [
+                "SFO",
+                "SJC",
+                "OAK"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000,
+              "direct_only": true
+            },
+            {
+              "origins": [
+                "SFO",
+                "SJC",
+                "OAK"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-04-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000
+            }
+          ],
+          "answer": "I found plenty of business award space for spring 2027 (March 1 to May 31) from SFO to Tokyo (Haneda HND or Narita NRT) under 90k points. I also searched San Jose and Oakland, but every result leaves from SFO. The data was last updated about 2 hours ago.\n\n**How many people are travelling?** You said \"each,\" so I'm assuming more than one, but I searched for single seats. Many dates have only 1 seat left, so tell me the group size and I'll search for that many seats on the same flight.\n\n### Best choice: ANA nonstop SFO \u2192 HND, 87,000 LifeMiles + about $41\nFlight NH107 is business the whole way and departs at 1:25am.\n\n| Seats | Dates |\n|---|---|\n| 2 | Mar 26, Apr 8, Apr 24, May 7, May 23 |\n| 1 | Mar 16, Mar 22, Apr 7, Apr 10, Apr 19, May 5, May 10, May 19, May 20, May 26 |\n\n### United nonstop SFO \u2192 NRT, 88,000 United miles + about $56\nFlight UA837 departs at 11:20am and is business the whole way.\n- **3 seats:** Mar 3, Mar 17, Mar 24\n- **1 seat:** Mar 10, Mar 23\n- The list was cut off at 20 results, so there are probably more United dates in April and May that I haven't seen yet.\n\n### Cheapest, but not all business: 85,000 Aeroplan points + about CA$101\nThese are 1-stop United + ANA trips departing at 12:55pm, with space on most days from March through May and often 2\u20134 seats. About **15% of the distance is in a lower cabin**, so you save only 2\u20133k points over a fully business nonstop. I'd skip these unless they're the only dates that work.\n\n### Before you transfer points\n- Seats.aero data can be out of date. Check the seats on the airline program's own site (LifeMiles, United or Aeroplan) before moving any points, because transfers usually can't be reversed.\n- April is cherry blossom season and space goes fast.\n\nOnce you tell me how many seats you need, I can narrow this down. I can also pull the remaining United dates for April and May.",
+          "model": "claude-opus-5-5",
+          "seconds": 24.3
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origins_include_sfo",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "tokyo_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "spring_dates",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "covers_whole_spring",
+              "passed": true,
+              "detail": "The answer reports seats in all three months: nonstop LifeMiles dates in March, April, and May, plus United dates in March, so it doesn't stop at March or say it doesn't know about April and May."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "NRT",
+                "HND"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 89999
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "NRT",
+                "HND"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 89999,
+              "seats": 2
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "NRT",
+                "HND"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 89999,
+              "direct_only": true
+            }
+          ],
+          "answer": "I found plenty of business seats under 90k points each from SFO to Tokyo between March 1 and May 31, 2027. I searched both Tokyo airports, Haneda (HND) and Narita (NRT). This is one-way, SFO to Tokyo only. You didn't say how many people are going, so I listed the dates with at least 2 seats.\n\n**Nonstop, business the whole way (best option)**\n\n| Program | Flight | Points per person | Taxes | Dates with 2+ seats |\n|---|---|---|---|---|\n| LifeMiles | ANA SFO\u2192HND, leaves at 1:25 am | 87,000 | $41 | Mar 26, Apr 8, Apr 24, May 7, May 23 |\n| United | United SFO\u2192NRT, leaves at 11:20 am | 88,000 | $56 | Mar 3, Mar 17, Mar 24 |\n\nLifeMiles also has dates with only 1 seat: Mar 16, Mar 22, Apr 7, Apr 10, Apr 19, May 5, May 10, May 19, May 20 and May 26. United has 1 seat on Mar 10 and Mar 23. There are 16 more nonstop options under 90k that the search didn't show, mostly later in spring, so I can pull those if you want other dates.\n\n**Cheapest, but one stop and not all business: 85,000 points per person with Aeroplan**\n- This is a United flight connecting to ANA, leaving at 12:55 pm. About 15% of the distance is in a lower cabin.\n- Taxes are about CAD $101.\n- There are 2+ seats on many March dates, for example Mar 3, 4, 6, 12\u201314, 19, 23, 28\u201330 and Apr 1.\n- It only saves 2\u20133k points over the nonstop flights, so I'd go nonstop.\n\n**Before you move any points:**\n- This availability was last checked about 2 hours ago. Award seats disappear quickly, so check the dates on the program's own site (LifeMiles, United or Aeroplan) before transferring. Transfers usually can't be undone.\n- The ANA nonstop leaves at 1:25 am, so the date shown is the night before. For example, \"Mar 26\" means you leave late on Mar 25.\n- Tokyo's cherry blossoms usually peak in late March to early April, so dates like Mar 26 and Apr 8 will likely be hard to get.\n\nHow many people are travelling, and do you want me to search the return trip too?",
+          "model": "claude-opus-5-5",
+          "seconds": 27.0
+        }
+      ]
+    }
+  ]
+}

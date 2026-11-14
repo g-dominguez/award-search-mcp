@@ -13,7 +13,15 @@ from mcp.server import MCPServer
 from mcp.types import ToolAnnotations
 from pydantic import Field
 
-from award_search.search import STALE_AFTER_HOURS, AwardSeat, RouteSearch, SearchResult, SearchStatus, search
+from award_search.search import (
+    STALE_AFTER_HOURS,
+    AwardSeat,
+    RouteSearch,
+    SearchResult,
+    SearchStatus,
+    SummaryRow,
+    search,
+)
 
 AirportCode = Annotated[str, Field(pattern=r"^[A-Za-z]{3}$", description="3-letter IATA airport code.")]
 
@@ -40,6 +48,7 @@ class SearchAnswer:
     shown: int
     total_found: int
     complete: bool  # False means Seats.aero had more results than it sent
+    summary: list[SummaryRow]  # every match by route and period, when there are more than 20
 
 
 INCOMPLETE_NOTE = (
@@ -60,6 +69,13 @@ def describe(result: SearchResult) -> str:
 
     total = f"{result.total_found}" if result.complete else f"at least {result.total_found}"
     parts = [f"Showing {len(result.seats)} of {total} flights, fewest points per seat first."]
+    if result.summary:
+        grouping = "route" if result.summary_by == "route" else f"route and {result.summary_by}"
+        parts.append(
+            f"The summary covers all {result.total_found} flights by {grouping}, with the cheapest points "
+            "per seat, number of flights and (for months) the dates in each, so use it for dates and routes "
+            "beyond the ones shown."
+        )
     if not result.complete:
         parts.append(INCOMPLETE_NOTE)
     old = sum(1 for s in result.seats if s.hours_since_seen is not None and s.hours_since_seen > STALE_AFTER_HOURS)
@@ -96,7 +112,8 @@ def search_award_seats(
     Takes exact airport codes and dates only: turn "London" into ["LHR", "LGW"] and
     "mid-July" into a date range before calling. If the user hasn't said where they're
     flying from or to, ask them instead of guessing airports. Results are sorted by fewest points
-    per seat and capped at 20. Flights with stops and mixed cabin flights (part of the
+    per seat and capped at 20, with a summary of all matches by route and date or month
+    when there are more. Flights with stops and mixed cabin flights (part of the
     distance in a lower cabin) are included and labelled. A status of "failed" means
     the search did not run, so never report it as "no seats".
     """
@@ -121,6 +138,7 @@ def search_award_seats(
         shown=len(result.seats),
         total_found=result.total_found,
         complete=result.complete,
+        summary=result.summary,
     )
 
 

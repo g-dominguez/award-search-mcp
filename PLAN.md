@@ -19,7 +19,7 @@ Terms used here are defined in `GLOSSARY.md`.
 - **Flights with stops and mixed cabins are included** and clearly labelled. A "direct only" option is available.
 - **All loyalty programs by default**, and a search can be narrowed to some of them.
 - **A failed search never looks like an empty one.** Every search returns one of: found seats, found nothing, or failed (with the reason).
-- **Results are capped:** sorted by fewest points per seat, top 20, with a count of how many were left out.
+- **Results are capped:** sorted by fewest points per seat, top 20, with a count of how many were left out. When there are more than 20, a summary of all matches is added. It's grouped by route and date, or by route and month (with the dates) for ranges over 31 days, so the cap can't hide whole dates or airports. Added November 14, 2026, after evals showed Claude needing 3–4 searches to see past the cap; with the summary it usually needs one.
 - **Each result shows:** date, route, departure time, loyalty program, operating airline(s), points per seat and in total, taxes and fees in the program's own currency, seats available, stops, whether it's mixed cabin, last seen, and a Seats.aero link.
 - **Data can be out of date.** Every result shows when it was last seen, and the output tells the agent to suggest confirming on the loyalty program's site before transferring points.
 - **The API key stays on the server** and never reaches the model.
@@ -91,7 +91,6 @@ A real broad search through `claude -p` showed Claude passing on the new warning
 
 ## Backlog
 
-- **The cap can hide most of a date range or whole airports.** The 20 slots go to the cheapest results, so a cheaper date or origin can crowd out the rest. With SFO→Tokyo in spring, all 20 were in March. With London or Tokyo to LA or New York, all 20 were from London and Tokyo didn't appear. Claude noticed both times and offered narrower searches. One possible fix is the cheapest few per date or per route. That would change the "top 20 by points" decision, so ask first.
 - **Claude sometimes repeats the exact same search.** In one eval run it called `search_award_seats` twice with identical arguments. Each call costs one of the 1,000 daily API calls. A short cache in the server, or a line in the tool description, could stop this.
 - **Connection airports aren't shown.** Trips have a `Connections` field, but results leave it out. Claude guessed a connection city for a mixed cabin flight and flagged it as a guess. Showing connections would remove the guesswork.
 - **The monitor hides American seats.** `seats-aero-monitor`'s `flight_qualifies` treats `RemainingSeats: 0` as no seats, but for American it means unknown. That's for the owner to decide, since the monitor isn't changed from here.

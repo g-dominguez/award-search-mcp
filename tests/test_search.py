@@ -233,3 +233,88 @@ def test_zero_taxes_means_unknown(fake_api):
 
     assert result.seats[0].flight_numbers == "VS9007"
     assert result.seats[0].taxes is None
+
+
+def response_with_flights(flights):
+    """A Seats.aero response with one premium economy flight per (origin, destination, date, points)."""
+    return {"data": [
+        {
+            "Route": {"OriginAirport": origin, "DestinationAirport": destination, "Source": "virginatlantic"},
+            "Date": day,
+            "WAvailable": True,
+            "Source": "virginatlantic",
+            "AvailabilityTrips": [{
+                "FlightNumbers": f"VS9{n:03}", "Cabin": "premium", "RemainingSeats": 9, "MileageCost": points,
+                "OriginAirport": origin, "DestinationAirport": destination, "Stops": 0,
+            }],
+        }
+        for n, (origin, destination, day, points) in enumerate(flights)
+    ]}
+
+
+def test_summary_is_left_out_when_every_match_is_shown(fake_api):
+    fake_api(load_fixture("lhr_lax_match.json"))
+
+    result = search(route_search(), api_key="fake-key")
+
+    assert result.summary == []
+    assert result.summary_by is None
+
+
+def test_summary_covers_dates_beyond_the_cap(fake_api):
+    # 15 cheap flights on July 10 fill most of the cap, but July 20 still shows up in the summary
+    flights = [("LHR", "LAX", "2027-07-10", 50000)] * 15 + [("LHR", "LAX", "2027-07-20", 60000)] * 10
+    fake_api(response_with_flights(flights))
+
+    result = search(
+        route_search(start_date=date(2027, 7, 10), end_date=date(2027, 7, 20), points_limit=None), api_key="fake-key"
+    )
+
+    assert result.summary_by == "date"
+    assert [(r.period, r.cheapest_points, r.flights) for r in result.summary] == [
+        ("2027-07-10", 50000, 15),
+        ("2027-07-20", 60000, 10),
+    ]
+
+
+def test_summary_uses_months_for_long_ranges(fake_api):
+    flights = [("SFO", "NRT", f"2027-{month:02}-{d:02}", 85000) for month in (3, 4, 5) for d in range(1, 9)]
+    fake_api(response_with_flights(flights))
+
+    result = search(
+        route_search(origins=["SFO"], destinations=["NRT"], start_date=date(2027, 3, 1), end_date=date(2027, 5, 31),
+                     points_limit=None),
+        api_key="fake-key",
+    )
+
+    assert result.summary_by == "month"
+    assert [(r.period, r.flights) for r in result.summary] == [("2027-03", 8), ("2027-04", 8), ("2027-05", 8)]
+    assert result.summary[1].dates == [f"2027-04-0{d}" for d in range(1, 9)]
+
+
+def test_summary_falls_back_to_routes_when_there_are_too_many_rows(fake_api):
+    # 7 origins x 6 destinations = 42 routes, more than the 40-row limit even by month
+    origins, destinations = ["LHR", "LGW", "LCY", "STN", "LTN", "SEN", "MAN"], ["JFK", "EWR", "LGA", "BOS", "IAD", "PHL"]
+    flights = [(o, d, "2027-07-17", 60000) for o in origins for d in destinations]
+    fake_api(response_with_flights(flights))
+
+    result = search(route_search(origins=origins, destinations=destinations, points_limit=None), api_key="fake-key")
+
+    assert result.summary_by == "route"
+    assert len(result.summary) == 42
+    assert {r.period for r in result.summary} == {"all dates"}
+
+
+def test_cap_summary_counts_every_flight(fake_api):
+    response = load_fixture("lhr_lax_match.json")
+    template = response["data"][0]["AvailabilityTrips"][0]
+    response["data"][0]["AvailabilityTrips"] = [
+        copy.deepcopy(template) | {"FlightNumbers": f"VS{n}", "MileageCost": 50000 + n * 1000} for n in range(25)
+    ]
+    fake_api(response)
+
+    result = search(route_search(), api_key="fake-key")
+
+    assert [(r.origin, r.destination, r.period, r.cheapest_points, r.flights) for r in result.summary] == [
+        ("LHR", "LAX", "2027-07-17", 50000, 25)
+    ]

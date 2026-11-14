@@ -175,5 +175,10 @@ async def test_oversized_response_still_gives_a_small_answer(monkeypatch):
 
     assert answer["shown"] == 20
     assert answer["total_found"] == 5000
+    assert answer["summary"] == [
+        {"origin": "LHR", "destination": "LAX", "period": "2027-07-17", "cheapest_points": 50000, "flights": 5000,
+         "dates": None}
+    ]
+    assert "The summary covers all 5000 flights by route and date" in answer["message"]
     # Claude Code warns above 10,000 tokens of tool output; a token is roughly 4 characters
     assert len(text) < 40_000

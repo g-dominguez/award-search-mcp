@@ -52,8 +52,12 @@ def day(run_value: str | None) -> date | None:
 
 
 def dates_between(run: Run, start_from, start_to, end_from, end_to) -> bool:
-    start, end = day(run.first.get("start_date")), day(run.first.get("end_date"))
-    return bool(start and end) and start_from <= start <= start_to and end_from <= end <= end_to
+    """Check the date range covered by all the searches together, since Claude may split a range."""
+    starts = [day(c.get("start_date")) for c in run.calls if c.get("start_date")]
+    ends = [day(c.get("end_date")) for c in run.calls if c.get("end_date")]
+    if not starts or not ends:
+        return False
+    return start_from <= min(starts) <= start_to and end_from <= max(ends) <= end_to
 
 
 searched = CodeCheck("searched", lambda run: len(run.calls) > 0)
@@ -124,6 +128,14 @@ CASES = [
             CodeCheck(
                 "spring_dates",
                 lambda run: dates_between(run, date(2027, 3, 1), date(2027, 3, 21), date(2027, 5, 31), date(2027, 6, 21)),
+            ),
+            # Each search costs one of 1,000 daily API calls. The summary should make one search enough.
+            CodeCheck("at_most_two_searches", lambda run: len(run.calls) <= 2),
+            JudgeCheck(
+                "covers_whole_spring",
+                "Seats under 90k exist in March, April and May, at 85,000 points in every month. A good answer "
+                "tells the user that seats are available across all three months. It fails if it only reports "
+                "March, or says it doesn't know about April and May.",
             ),
         ],
     ),

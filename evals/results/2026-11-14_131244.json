@@ -1,0 +1,216 @@
+{
+  "started_at": "2026-11-14 13:12:44",
+  "model": "claude-opus-5-5",
+  "judge_model": "haiku",
+  "repeat": 3,
+  "cases": [
+    {
+      "name": "season_dates",
+      "passed": false,
+      "runs": [
+        {
+          "passed": false,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origins_include_sfo",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "tokyo_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "spring_dates",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "at_most_two_searches",
+              "passed": false,
+              "detail": ""
+            },
+            {
+              "name": "covers_whole_spring",
+              "passed": true,
+              "detail": "The answer reports award space in March, April, and May, with specific April and May dates for the LifeMiles/ANA and United nonstops and \"almost every day from March through May\" for the 85k Aeroplan option, so it does not stop at March or disclaim April and May."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000,
+              "seats": 2
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000
+            },
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "HND",
+                "NRT"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000,
+              "direct_only": true
+            }
+          ],
+          "answer": "I searched San Francisco (SFO) to both Tokyo airports, Haneda (HND) and Narita (NRT), in business class for March 1 \u2013 May 31, 2027, at 90k points per seat or less. **There's plenty of space, and the best options are nonstop flights at 87k\u201388k.** The cheapest results overall are 85k, but they have a catch.\n\n**Best options: nonstop, business class the whole way (36 flights in total)**\n\n| Program | Flight | Route | Points / seat | Taxes | Dates with 2+ seats (of those shown) |\n|---|---|---|---|---|---|\n| Avianca LifeMiles | ANA NH9107, departs 1:25am | SFO \u2192 HND | 87,000 | $41 | Mar 26, Apr 8, Apr 24, May 7, May 23 (2 seats) |\n| United MileagePlus | UA9837, departs 11:20am | SFO \u2192 NRT | 88,000 | $56 | Mar 3, Mar 17, Mar 24 (3 seats) |\n\n- The LifeMiles/ANA flight has 1 seat on other dates too: Mar 16, Mar 22, Apr 7, Apr 10, Apr 19, May 5, May 10, May 19, May 20 and May 26. It flies to Haneda, which is the closer airport to central Tokyo.\n- The search only displayed 20 of the 36 nonstops. The other 16 are mostly United flights to Narita in April (6) and May (10), so there are more dates than the table shows.\n\n**Cheapest: 85,000 points through Air Canada Aeroplan (102 flights; 66 of them have 2+ seats)**\n- These are one-stop trips on United plus ANA, leaving at 12:55pm, with about CA$101 in taxes. Space is available almost every day from March through May.\n- **The catch:** they're labelled \"mixed cabin.\" About 15% of the distance (probably a short connecting flight) is in a lower class than business. Saving 2\u20133k points probably isn't worth an extra stop and a partly non-business trip, so I'd go with a nonstop.\n\n**Notes**\n- All of this availability was seen about 2 hours ago. Award space changes quickly, so check the date on LifeMiles, United or Aeroplan before you transfer any points.\n- How many people are travelling? You said \"each,\" so I checked for 2 seats on the same flight, and there are plenty of options for 2. If you need 3 or more, the United nonstops to Narita are the most likely fit.\n- I only searched one-way to Tokyo. Tell me your return dates and I'll search Tokyo back to SFO.",
+          "model": "claude-opus-5-5",
+          "seconds": 32.5
+        },
+        {
+          "passed": false,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origins_include_sfo",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "tokyo_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "spring_dates",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "at_most_two_searches",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "covers_whole_spring",
+              "passed": false,
+              "detail": "The answer reports seat counts for March, April, and May, but it only lists the early-March dates with the most seats and says the April and May flights are not detailed, so it does not clearly tell the user that 85,000-point seats are available across all three months."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "NRT",
+                "HND"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000
+            }
+          ],
+          "answer": "I found **102 business class award flights from SFO to Tokyo between March and May 2027 under 90k points.** They all look like the same deal:\n\n- **Program:** Air Canada Aeroplan\n- **Price:** 85,000 points per person, plus about CAD $101 in taxes\n- **Flights:** United and ANA, 1 stop, leaving SFO at 12:55 PM\n- **Mixed cabin:** about 15% of the distance is in a lower cabin, probably the short first leg. The long flight over the Pacific is the business class part.\n- **Airports:** both Haneda (HND, closer to central Tokyo) and Narita (NRT)\n\n**How many flights there are each month:**\n\n| Month | To HND | To NRT |\n|---|---|---|\n| March | 13 | 18 |\n| April | 13 | 17 |\n| May | 19 | 22 |\n\n**Some early-March dates with the most seats:**\n\n| Date | Airport | Seats open |\n|---|---|---|\n| Mar 3, Mar 4 | NRT | 4 |\n| Mar 6, Mar 19, Mar 23 | HND | 3 |\n| Mar 12, 13, 14 | NRT | 3 |\n\nThe results only list the first 20 flights in detail, all in March. For April or May, I can pull specific dates.\n\n**Before you book:**\n- No nonstop business class flights came up under 90k. Nonstops usually cost more, so I can search above 90k if you'd like to compare.\n- I can't tell what the first leg is from the flight numbers. They look like codeshare numbers, so check the exact connection on Aeroplan's site.\n- The data was last updated about 2 hours ago. Award seats go fast, so check that seats are still there on aircanada.com before you move any points into Aeroplan.\n\n**How many people are travelling?** Some dates only have 1 or 2 seats open. If you tell me, I'll search for dates with enough seats for everyone on the same flight. I can also search return flights if you need them.",
+          "model": "claude-opus-5-5",
+          "seconds": 23.2
+        },
+        {
+          "passed": false,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "origins_include_sfo",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "tokyo_airports",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "points_limit",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "spring_dates",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "at_most_two_searches",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "covers_whole_spring",
+              "passed": false,
+              "detail": "The answer reports seat availability only for March, with explicit dates listed for March and counts for April and May, but it states \"I don't have exact April or May dates yet\" and never confirms that seats at 85,000 points exist in all three months as the rule requires. Note that its per-month table does show date counts for April and May, so it does not say it knows nothing about those months, but it still fails to state the key point that availability spans March, April, and May."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "SFO"
+              ],
+              "destinations": [
+                "NRT",
+                "HND"
+              ],
+              "start_date": "2027-03-01",
+              "end_date": "2027-05-31",
+              "cabin": "business",
+              "points_limit": 90000
+            }
+          ],
+          "answer": "I searched March\u2013May 2027, SFO to both Tokyo airports (Haneda and Narita), and found **102 business class flights under 90k points**. Every one costs **85,000 Aeroplan points per seat plus about CAD $101 in taxes**.\n\n**What the flights are like**\n- **Airlines and flight numbers:** United's UA9857 connecting to ANA's NH9920. All 102 have one stop. No nonstops came up under 90k.\n- **Not fully business class:** About 15% of the distance is in a lower cabin, probably a short first leg. The rest is in business.\n- **Departure time:** 12:55 pm from SFO.\n\n**Spread by month**\n\n| Month | Haneda | Narita |\n|---|---|---|\n| March | 13 dates | 18 dates |\n| April | 13 dates | 17 dates |\n| May | 19 dates | 22 dates |\n\n**Seats per flight:** You said \"each,\" so you may need more than one seat. Seats on the same flight vary from 1 to 4, and many dates only have 1. If you're traveling as two, these March dates show 2 or more seats:\n- **Haneda:** Mar 1, 5, 6, 8, 19, 23, 25\n- **Narita:** Mar 3, 4, 9, 10, 12, 13, 14, 17, 18\n\nThe results only listed March flights individually, so I don't have exact April or May dates yet.\n\n**Before you transfer points:** This data was updated about 2 hours ago, but award seats disappear fast. Check the seats are still there on Aeroplan's site (aircanada.com) first. Points transfers usually can't be undone.\n\nHow many seats do you need, and do you have a month in mind, like late March or early April for cherry blossoms? I can search with that seat count to list exact April or May dates, or check for nonstops at a higher points price.",
+          "model": "claude-opus-5-5",
+          "seconds": 22.6
+        }
+      ]
+    }
+  ]
+}

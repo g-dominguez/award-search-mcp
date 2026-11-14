@@ -20,6 +20,8 @@ from enum import StrEnum
 # Overridable so tests can point a running server at a local fake Seats.aero
 API_URL = os.getenv("SEATS_AERO_API_URL", "https://seats.aero/partnerapi/search")
 RESULT_CAP = 20
+# Most rows in the summary of all matches; past this, rows are grouped more coarsely
+SUMMARY_CAP = 40
 # Results last seen longer ago than this are flagged as old (about the oldest sixth in real data)
 STALE_AFTER_HOURS = 48
 
@@ -73,12 +75,27 @@ class AwardSeat:
 
 
 @dataclass(frozen=True)
+class SummaryRow:
+    """The cheapest points per seat and number of matching flights for one route in one period."""
+
+    origin: str
+    destination: str
+    period: str  # a date (YYYY-MM-DD), a month (YYYY-MM) or "all dates"
+    cheapest_points: int
+    flights: int
+    dates: list[str] | None = None  # dates with matches, for month rows only
+
+
+@dataclass(frozen=True)
 class SearchResult:
     status: SearchStatus
     seats: list[AwardSeat] = field(default_factory=list)
     total_found: int = 0  # before the cap, so "showing 20 of N" is possible
     reason: str | None = None  # only set when the search failed
     complete: bool = True  # False when Seats.aero had more results than it sent
+    # Covers every match when there are more than RESULT_CAP, so the cap can't hide whole dates or routes
+    summary: list[SummaryRow] = field(default_factory=list)
+    summary_by: str | None = None  # "date", "month" or "route"
 
 
 class SeatsAeroError(Exception):
@@ -118,9 +135,41 @@ def search(route_search: RouteSearch, api_key: str | None = None, now: datetime 
         return SearchResult(SearchStatus.NOTHING_FOUND, complete=complete)
 
     matches.sort(key=lambda s: (s.points_per_seat, s.date, s.departs_at or ""))
+    summary, summary_by = summarize(matches, route_search) if len(matches) > RESULT_CAP else ([], None)
     return SearchResult(
-        SearchStatus.FOUND, seats=matches[:RESULT_CAP], total_found=len(matches), complete=complete
+        SearchStatus.FOUND,
+        seats=matches[:RESULT_CAP],
+        total_found=len(matches),
+        complete=complete,
+        summary=summary,
+        summary_by=summary_by,
     )
+
+
+def summarize(matches: list[AwardSeat], route_search: RouteSearch) -> tuple[list[SummaryRow], str]:
+    """Group every match by route and period. Uses dates for ranges up to 31 days, otherwise months,
+    and switches to coarser groups when there would be more than SUMMARY_CAP rows."""
+    days_searched = (route_search.end_date - route_search.start_date).days + 1
+    levels = (["date"] if days_searched <= 31 else []) + ["month", "route"]
+    period_of = {"date": lambda s: s.date, "month": lambda s: s.date[:7], "route": lambda s: "all dates"}
+
+    for level in levels:
+        groups: dict[tuple[str, str, str], list[AwardSeat]] = {}
+        for seat in matches:
+            groups.setdefault((seat.origin, seat.destination, period_of[level](seat)), []).append(seat)
+        if len(groups) <= SUMMARY_CAP or level == "route":
+            rows = [
+                SummaryRow(
+                    origin,
+                    destination,
+                    period,
+                    min(s.points_per_seat for s in seats),
+                    len(seats),
+                    sorted({s.date for s in seats}) if level == "month" else None,
+                )
+                for (origin, destination, period), seats in sorted(groups.items())
+            ]
+            return rows, level
 
 
 def build_params(route_search: RouteSearch) -> dict:
