@@ -83,7 +83,7 @@ It talks MCP over stdio, so it's meant to be started by an MCP client such as Cl
 
 ### Use it from Claude Code
 
-`.mcp.json` registers the server for this project. It passes `SEATS_AERO_API_KEY` through from your shell, so the key is never written to a file. One way to keep the key out of dotfiles is the macOS Keychain:
+For everyday use, see "Host it on AWS" below. To run the local version from this folder instead, for example while changing the code, keep the key in your shell and pass its name through in single quotes, so the key itself is never written to a file. One way to keep the key out of dotfiles is the macOS Keychain:
 
 ```sh
 security add-generic-password -a "$USER" -s seats-aero-api-key -w   # paste the key when asked
@@ -91,7 +91,13 @@ security add-generic-password -a "$USER" -s seats-aero-api-key -w   # paste the 
 export SEATS_AERO_API_KEY="$(security find-generic-password -a "$USER" -s seats-aero-api-key -w)"
 ```
 
-Start `claude` in this folder, approve the `award-search` server, and check it with `/mcp`.
+Then, from this folder:
+
+```sh
+claude mcp add --scope local award-search -e 'SEATS_AERO_API_KEY=${SEATS_AERO_API_KEY}' -e "PYTHONPATH=$PWD" -- "$PWD/.venv/bin/python" -m award_search.server
+```
+
+Start `claude` here and check it with `/mcp`.
 
 ## Host it on AWS
 
