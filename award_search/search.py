@@ -14,12 +14,14 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, datetime, timezone
 from enum import StrEnum
 
 # Overridable so tests can point a running server at a local fake Seats.aero
 API_URL = os.getenv("SEATS_AERO_API_URL", "https://seats.aero/partnerapi/search")
 RESULT_CAP = 20
+# Results last seen longer ago than this are flagged as old (about the oldest sixth in real data)
+STALE_AFTER_HOURS = 48
 
 # Seats.aero prefixes its per-cabin summary fields with these letters (WMileageCost, JAvailable...)
 CABIN_LETTERS = {"economy": "Y", "premium": "W", "business": "J", "first": "F"}
@@ -66,6 +68,7 @@ class AwardSeat:
     mixed_cabin: bool
     mixed_cabin_pct: int | None  # share of the distance flown below the requested cabin
     last_seen: str | None
+    hours_since_seen: int | None
     link: str
 
 
@@ -75,14 +78,16 @@ class SearchResult:
     seats: list[AwardSeat] = field(default_factory=list)
     total_found: int = 0  # before the cap, so "showing 20 of N" is possible
     reason: str | None = None  # only set when the search failed
+    complete: bool = True  # False when Seats.aero had more results than it sent
 
 
 class SeatsAeroError(Exception):
     """The Seats.aero API couldn't be reached or gave an unusable answer."""
 
 
-def search(route_search: RouteSearch, api_key: str | None = None) -> SearchResult:
+def search(route_search: RouteSearch, api_key: str | None = None, now: datetime | None = None) -> SearchResult:
     """Run a route search and return found seats, nothing found, or failed with a reason."""
+    now = now or datetime.now(timezone.utc)
     if api_key is None:
         api_key = os.getenv("SEATS_AERO_API_KEY", "").strip()
     if not api_key:
@@ -102,12 +107,20 @@ def search(route_search: RouteSearch, api_key: str | None = None) -> SearchResul
     except SeatsAeroError as e:
         return SearchResult(SearchStatus.FAILED, reason=str(e))
 
-    matches = find_award_seats(response.get("data") or [], route_search)
+    items = response.get("data")
+    if not isinstance(items, list):
+        # Without this, an unexpected answer would look like "nothing found"
+        return SearchResult(SearchStatus.FAILED, reason="Seats.aero sent a response without a list of results.")
+    complete = not response.get("hasMore", False)
+
+    matches = find_award_seats(items, route_search, now)
     if not matches:
-        return SearchResult(SearchStatus.NOTHING_FOUND)
+        return SearchResult(SearchStatus.NOTHING_FOUND, complete=complete)
 
     matches.sort(key=lambda s: (s.points_per_seat, s.date, s.departs_at or ""))
-    return SearchResult(SearchStatus.FOUND, seats=matches[:RESULT_CAP], total_found=len(matches))
+    return SearchResult(
+        SearchStatus.FOUND, seats=matches[:RESULT_CAP], total_found=len(matches), complete=complete
+    )
 
 
 def build_params(route_search: RouteSearch) -> dict:
@@ -155,7 +168,7 @@ def fetch_availability(params: dict, api_key: str) -> dict:
     return data
 
 
-def find_award_seats(items: list[dict], route_search: RouteSearch) -> list[AwardSeat]:
+def find_award_seats(items: list[dict], route_search: RouteSearch, now: datetime) -> list[AwardSeat]:
     """Turn availability items into award seats. Each flight is checked on its own."""
     letter = CABIN_LETTERS[route_search.cabin]
     matches = []
@@ -176,7 +189,7 @@ def find_award_seats(items: list[dict], route_search: RouteSearch) -> list[Award
 
         for trip in trips:
             if flight_qualifies(trip, route_search):
-                matches.append(to_award_seat(item, trip, route_search))
+                matches.append(to_award_seat(item, trip, route_search, now))
 
     return matches
 
@@ -209,7 +222,16 @@ def flight_qualifies(trip: dict, route_search: RouteSearch) -> bool:
     return True
 
 
-def to_award_seat(item: dict, trip: dict, route_search: RouteSearch) -> AwardSeat:
+def hours_since(timestamp: str | None, now: datetime) -> int | None:
+    """Whole hours between a Seats.aero timestamp (UTC) and now, or None if it's missing or unreadable."""
+    try:
+        seen = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+    except (AttributeError, ValueError):
+        return None
+    return int((now - seen).total_seconds() // 3600)
+
+
+def to_award_seat(item: dict, trip: dict, route_search: RouteSearch, now: datetime) -> AwardSeat:
     route = item.get("Route") or {}
     origin = trip.get("OriginAirport") or route.get("OriginAirport", "")
     destination = trip.get("DestinationAirport") or route.get("DestinationAirport", "")
@@ -218,6 +240,7 @@ def to_award_seat(item: dict, trip: dict, route_search: RouteSearch) -> AwardSea
     mixed_cabin_pct = trip.get("MixedCabinPct")
     taxes = int(trip.get("TotalTaxes") or item.get("TotalTaxes") or 0)
     departs_at = trip.get("DepartsAt")
+    last_seen = trip.get("UpdatedAt") or item.get("UpdatedAt")
 
     return AwardSeat(
         date=flight_date,
@@ -237,6 +260,7 @@ def to_award_seat(item: dict, trip: dict, route_search: RouteSearch) -> AwardSea
         stops=int(trip.get("Stops") or 0),
         mixed_cabin=bool(mixed_cabin_pct),
         mixed_cabin_pct=mixed_cabin_pct,
-        last_seen=trip.get("UpdatedAt") or item.get("UpdatedAt"),
+        last_seen=last_seen,
+        hours_since_seen=hours_since(last_seen, now),
         link=f"https://seats.aero/search?origin={origin}&destination={destination}&date={flight_date}",
     )

@@ -13,7 +13,7 @@ from mcp.server import MCPServer
 from mcp.types import ToolAnnotations
 from pydantic import Field
 
-from award_search.search import AwardSeat, RouteSearch, SearchStatus, search
+from award_search.search import STALE_AFTER_HOURS, AwardSeat, RouteSearch, SearchResult, SearchStatus, search
 
 AirportCode = Annotated[str, Field(pattern=r"^[A-Za-z]{3}$", description="3-letter IATA airport code.")]
 
@@ -39,6 +39,38 @@ class SearchAnswer:
     seats: list[AwardSeat]
     shown: int
     total_found: int
+    complete: bool  # False means Seats.aero had more results than it sent
+
+
+INCOMPLETE_NOTE = (
+    "Seats.aero had more results than fit in one response, so this is not a complete check. "
+    "Narrow the search (fewer airports or a shorter date range) to see everything."
+)
+
+
+def describe(result: SearchResult) -> str:
+    """A plain-language summary that keeps failed, incomplete and old results from looking like answers."""
+    if result.status == SearchStatus.FAILED:
+        return f"The search failed: {result.reason} This does not mean there are no seats."
+
+    if result.status == SearchStatus.NOTHING_FOUND:
+        if not result.complete:
+            return "No matching award seats in the results Seats.aero sent. " + INCOMPLETE_NOTE
+        return "Seats.aero has no award seats matching this search. The search ran successfully."
+
+    total = f"{result.total_found}" if result.complete else f"at least {result.total_found}"
+    parts = [f"Showing {len(result.seats)} of {total} flights, fewest points per seat first."]
+    if not result.complete:
+        parts.append(INCOMPLETE_NOTE)
+    old = sum(1 for s in result.seats if s.hours_since_seen is not None and s.hours_since_seen > STALE_AFTER_HOURS)
+    if old:
+        parts.append(
+            f"{old} of these {'was' if old == 1 else 'were'} last seen more than {STALE_AFTER_HOURS} hours ago "
+            "(see hours_since_seen), "
+            "so they are more likely to be gone."
+        )
+    parts.append(STALE_DATA_NOTE)
+    return " ".join(parts)
 
 
 @mcp.tool(annotations=ToolAnnotations(read_only_hint=True, open_world_hint=True))
@@ -81,22 +113,13 @@ def search_award_seats(
         )
     )
 
-    if result.status == SearchStatus.FAILED:
-        message = f"The search failed: {result.reason} This does not mean there are no seats."
-    elif result.status == SearchStatus.NOTHING_FOUND:
-        message = "Seats.aero has no award seats matching this search. The search ran successfully."
-    else:
-        message = (
-            f"Showing {len(result.seats)} of {result.total_found} flights, fewest points per seat first. "
-            + STALE_DATA_NOTE
-        )
-
     return SearchAnswer(
         status=result.status,
-        message=message,
+        message=describe(result),
         seats=result.seats,
         shown=len(result.seats),
         total_found=result.total_found,
+        complete=result.complete,
     )
 
 

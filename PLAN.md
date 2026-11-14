@@ -62,9 +62,17 @@ Terms used here are defined in `GLOSSARY.md`.
 **Write-up:** The server is added to Claude Code with a project `.mcp.json`. It reads `${SEATS_AERO_API_KEY}` from the shell, which loads it from the macOS Keychain, so the key isn't stored in any file. I ran 7 prompts through `claude -p` against the real API. They were the plan's examples, a follow-up answer in the same conversation, a repeat for consistency, a new "2 of us to Paris next fall, nonstop" prompt, and one with a fake key. Every tool call was sensible, so the tool description didn't need changes. Claude turned "mid-July" into July 10–20, "Tokyo" into HND+NRT and "2 of us" into `seats: 2`. When a prompt was missing an origin or destination, it asked instead of guessing. With the fake key it said "I couldn't check" and not "no seats". The surprise came from real data, before any prompt testing. American reports 0 remaining seats on almost every available flight (1,708 of 1,720 trips), meaning the count is unknown, so the search was hiding nearly all American results. Those flights are now included with an unknown seat count. Taxes reported as 0 are shown as unknown, and departure times drop a misleading `Z`, because they're local time. The Seats.aero link format, copied from the monitor, was checked by hand: it opens the right search.
 
 ### 5. Handle failures
-- [ ] A bad API key, an empty result, old data and an oversized response.
+- [x] A bad API key, an empty result, old data and an oversized response.
 
 **Done when:** each case has a test, and the output makes the failure or data age clear enough that the agent can't present a failed check as "no seats".
+
+**Write-up:** `tests/test_failures.py` covers each case through the real MCP tool and checks the message the agent sees.
+- **Bad key:** I first checked what Seats.aero really sends for a bad key (HTTP 401 with `bad_partner_key`), so that test uses the real response.
+- **Old data:** each result now has `hours_since_seen`. The message flags results last seen more than 48 hours ago. I picked 48 hours from real data: the median result was 13.5 hours old, about a sixth were over 48 hours, and none were over a week.
+- **Oversized:** a response with `hasMore` is marked `complete: false`, and the message says "at least N" and "not a complete check". This includes the case where nothing was found but Seats.aero had more results. A 1,000-item response still gives a 20-result answer of about 13,000 characters, well under Claude Code's 10,000-token warning. A real 7 MB response took only 1.2 seconds, so the 20-second timeout is fine.
+- **Surprise:** a response without a `data` list was being reported as "nothing found", the exact problem this stage is about. It's now a failure.
+
+A real broad search through `claude -p` showed Claude passing on the new warnings, for example "last seen about 5 days ago, so it's the most likely to be gone".
 
 ### 6. Add evals
 - [ ] Write 5-10 test prompts covering vague dates, no availability and a Seats.aero outage, plus a way to rerun them.
@@ -80,10 +88,9 @@ Terms used here are defined in `GLOSSARY.md`.
 
 ## Backlog
 
-- **The cap can hide most of a date range.** Results with the same points are ordered by date, so a long range with many equal prices fills the 20 slots with the earliest dates. With SFO→Tokyo in spring, all 20 were in March. Claude noticed this and offered to search month by month. One possible fix is the cheapest few per date. That would change the "top 20 by points" decision, so ask first.
+- **The cap can hide most of a date range or whole airports.** The 20 slots go to the cheapest results, so a cheaper date or origin can crowd out the rest. With SFO→Tokyo in spring, all 20 were in March. With London or Tokyo to LA or New York, all 20 were from London and Tokyo didn't appear. Claude noticed both times and offered narrower searches. One possible fix is the cheapest few per date or per route. That would change the "top 20 by points" decision, so ask first.
 - **Connection airports aren't shown.** Trips have a `Connections` field, but results leave it out. Claude guessed a connection city for a mixed cabin flight and flagged it as a guess. Showing connections would remove the guesswork.
 - **The monitor hides American seats.** `seats-aero-monitor`'s `flight_qualifies` treats `RemainingSeats: 0` as no seats, but for American it means unknown. That's for the owner to decide, since the monitor isn't changed from here.
-- **Only the first page of results is read.** The search asks for up to 1,000 results (`take=1000`) and ignores `hasMore`/`cursor`, so `total_found` could undercount on very broad searches. Probably belongs in stage 5 (oversized response).
 - **Real fixture for mixed cabin.** Replace the hand-written `nce_lax_mixed_cabin.json` with a saved real response.
 
 ## Later ideas
