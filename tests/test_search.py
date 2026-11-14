@@ -67,7 +67,8 @@ def test_match_returns_qualifying_flights_cheapest_first(fake_api):
     assert cheapest.taxes_currency == "GBP"
     assert cheapest.seats_available == 8
     assert cheapest.loyalty_program == "virginatlantic"
-    assert cheapest.departs_at == "2027-07-17T09:55:00Z"
+    # Local time, so the misleading Z is dropped
+    assert cheapest.departs_at == "2027-07-17T09:55:00"
     assert cheapest.last_seen == "2026-11-06T18:24:13.784173Z"
     assert cheapest.stops == 0
     assert not cheapest.mixed_cabin
@@ -210,3 +211,25 @@ def test_end_date_before_start_date_is_failed():
 
     assert result.status == SearchStatus.FAILED
     assert "end_date" in result.reason
+
+
+def test_zero_seat_count_means_unknown_not_none_left(fake_api):
+    # American reports 0 remaining seats on almost every available flight, meaning "count unknown"
+    fake_api(load_fixture("lhr_lax_match.json"))
+
+    result = search(route_search(points_limit=None), api_key="fake-key")
+
+    american = [s for s in result.seats if s.loyalty_program == "american"]
+    assert [s.flight_numbers for s in american] == ["AA9135"]
+    assert american[0].seats_available is None
+
+
+def test_zero_taxes_means_unknown(fake_api):
+    response = load_fixture("lhr_lax_match.json")
+    response["data"][0]["AvailabilityTrips"][0]["TotalTaxes"] = 0
+    fake_api(response)
+
+    result = search(route_search(), api_key="fake-key")
+
+    assert result.seats[0].flight_numbers == "VS9007"
+    assert result.seats[0].taxes is None

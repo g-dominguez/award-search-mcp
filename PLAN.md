@@ -54,10 +54,12 @@ Terms used here are defined in `GLOSSARY.md`.
 **Write-up:** Added `mcp==2.3.0`, the current stable SDK. Version 2 renamed the server class from `FastMCP` to `MCPServer`, so most older examples online no longer match. `award_search/server.py` defines `search_award_seats` and runs over stdio with `python -m award_search.server`. The SDK builds the tool's input schema from type hints, and the descriptions come from `Field(...)`, so bad arguments like `cabin: "coach"` are rejected before any search runs. The tool returns a `SearchAnswer` with a status, the seats, "shown" and "total found" counts, and a plain-language message. The message says a failed search doesn't mean there are no seats, and that found seats should be confirmed before transferring points. The main test starts the server as a real subprocess and points it at a fake Seats.aero on `127.0.0.1` via a new `SEATS_AERO_API_URL` setting. It checks that the API key reaches Seats.aero but never appears in the tool result. Surprise: the SDK doesn't pass your environment variables to a subprocess server by default, so the test passes the key in explicitly.
 
 ### 4. Connect it to Claude
-- [ ] Add the server to Claude Desktop or Claude Code.
-- [ ] Try vague prompts ("anything from Nice in mid-July?", "business to Tokyo sometime in spring") and adjust the tool description when Claude picks wrong arguments.
+- [x] Add the server to Claude Desktop or Claude Code.
+- [x] Try vague prompts ("anything from Nice in mid-July?", "business to Tokyo sometime in spring") and adjust the tool description when Claude picks wrong arguments.
 
 **Done when:** vague prompts reliably lead to sensible tool calls and answers.
+
+**Write-up:** The server is added to Claude Code with a project `.mcp.json`. It reads `${SEATS_AERO_API_KEY}` from the shell, which loads it from the macOS Keychain, so the key isn't stored in any file. I ran 7 prompts through `claude -p` against the real API. They were the plan's examples, a follow-up answer in the same conversation, a repeat for consistency, a new "2 of us to Paris next fall, nonstop" prompt, and one with a fake key. Every tool call was sensible, so the tool description didn't need changes. Claude turned "mid-July" into July 10–20, "Tokyo" into HND+NRT and "2 of us" into `seats: 2`. When a prompt was missing an origin or destination, it asked instead of guessing. With the fake key it said "I couldn't check" and not "no seats". The surprise came from real data, before any prompt testing. American reports 0 remaining seats on almost every available flight (1,708 of 1,720 trips), meaning the count is unknown, so the search was hiding nearly all American results. Those flights are now included with an unknown seat count. Taxes reported as 0 are shown as unknown, and departure times drop a misleading `Z`, because they're local time. The Seats.aero link format, copied from the monitor, was checked by hand: it opens the right search.
 
 ### 5. Handle failures
 - [ ] A bad API key, an empty result, old data and an oversized response.
@@ -78,9 +80,9 @@ Terms used here are defined in `GLOSSARY.md`.
 
 ## Backlog
 
-- **Tax units aren't documented.** Seats.aero's docs don't say what unit `TotalTaxes` is in. The code divides by 100, like the monitor, which is wrong for currencies without cents (for example JPY). Check against a real response.
-- **Seats.aero link format isn't documented.** The link (`seats.aero/search?origin=…&destination=…&date=…`) is copied from the monitor. Check that it opens the right page.
-- **Departure time zone.** `DepartsAt` ends in `Z`, but the monitor treats it as local time. Confirm before showing times to the agent.
+- **The cap can hide most of a date range.** Results with the same points are ordered by date, so a long range with many equal prices fills the 20 slots with the earliest dates. With SFO→Tokyo in spring, all 20 were in March. Claude noticed this and offered to search month by month. One possible fix is the cheapest few per date. That would change the "top 20 by points" decision, so ask first.
+- **Connection airports aren't shown.** Trips have a `Connections` field, but results leave it out. Claude guessed a connection city for a mixed cabin flight and flagged it as a guess. Showing connections would remove the guesswork.
+- **The monitor hides American seats.** `seats-aero-monitor`'s `flight_qualifies` treats `RemainingSeats: 0` as no seats, but for American it means unknown. That's for the owner to decide, since the monitor isn't changed from here.
 - **Only the first page of results is read.** The search asks for up to 1,000 results (`take=1000`) and ignores `hasMore`/`cursor`, so `total_found` could undercount on very broad searches. Probably belongs in stage 5 (oversized response).
 - **Real fixture for mixed cabin.** Replace the hand-written `nce_lax_mixed_cabin.json` with a saved real response.
 

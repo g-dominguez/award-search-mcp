@@ -19,7 +19,9 @@ AirportCode = Annotated[str, Field(pattern=r"^[A-Za-z]{3}$", description="3-lett
 
 STALE_DATA_NOTE = (
     "Seats.aero data can be out of date: check each result's last_seen, and suggest "
-    "confirming on the loyalty program's site before transferring points."
+    "confirming on the loyalty program's site before transferring points. "
+    "Departure times are local to the origin airport. A null seats_available or taxes "
+    "means Seats.aero doesn't know it, so say so rather than guessing."
 )
 
 mcp = MCPServer(

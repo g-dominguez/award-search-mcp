@@ -53,15 +53,15 @@ class AwardSeat:
     date: str
     origin: str
     destination: str
-    departs_at: str | None
+    departs_at: str | None  # local time at the origin airport
     loyalty_program: str
     airlines: str
     flight_numbers: str | None
     points_per_seat: int
     points_total: int
-    taxes: float
+    taxes: float | None  # None when Seats.aero doesn't know
     taxes_currency: str | None
-    seats_available: int
+    seats_available: int | None  # None when Seats.aero doesn't know the count
     stops: int
     mixed_cabin: bool
     mixed_cabin_pct: int | None  # share of the distance flown below the requested cabin
@@ -192,7 +192,9 @@ def flight_qualifies(trip: dict, route_search: RouteSearch) -> bool:
     if cabin and cabin != route_search.cabin:
         return False
 
-    if int(trip.get("RemainingSeats") or 0) < route_search.seats:
+    # Some loyalty programs (mostly American) report 0 for "count unknown", so 0 isn't treated as none left
+    seats = int(trip.get("RemainingSeats") or 0)
+    if seats and seats < route_search.seats:
         return False
 
     points = parse_points(trip.get("MileageCost"))
@@ -214,21 +216,24 @@ def to_award_seat(item: dict, trip: dict, route_search: RouteSearch) -> AwardSea
     flight_date = item.get("Date", "")
     points = parse_points(trip.get("MileageCost"))
     mixed_cabin_pct = trip.get("MixedCabinPct")
+    taxes = int(trip.get("TotalTaxes") or item.get("TotalTaxes") or 0)
+    departs_at = trip.get("DepartsAt")
 
     return AwardSeat(
         date=flight_date,
         origin=origin,
         destination=destination,
-        departs_at=trip.get("DepartsAt"),
+        # Seats.aero marks times with Z, but they're local to each airport (duration only adds up that way)
+        departs_at=departs_at.removesuffix("Z") if departs_at else None,
         loyalty_program=item.get("Source") or route.get("Source", ""),
         airlines=trip.get("Carriers") or "",
         flight_numbers=trip.get("FlightNumbers"),
         points_per_seat=points,
         points_total=points * route_search.seats,
-        # Seats.aero gives taxes in the currency's smallest unit (pence, cents)
-        taxes=int(trip.get("TotalTaxes") or item.get("TotalTaxes") or 0) / 100,
+        # Seats.aero gives taxes times 100 in every currency, including JPY. 0 means unknown.
+        taxes=taxes / 100 if taxes else None,
         taxes_currency=trip.get("TaxesCurrency") or item.get("TaxesCurrency"),
-        seats_available=int(trip.get("RemainingSeats") or 0),
+        seats_available=int(trip.get("RemainingSeats") or 0) or None,
         stops=int(trip.get("Stops") or 0),
         mixed_cabin=bool(mixed_cabin_pct),
         mixed_cabin_pct=mixed_cabin_pct,

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "award-search": {
+      "command": "${CLAUDE_PROJECT_DIR:-.}/.venv/bin/python",
+      "args": ["-m", "award_search.server"],
+      "env": {
+        "PYTHONPATH": "${CLAUDE_PROJECT_DIR:-.}",
+        "SEATS_AERO_API_KEY": "${SEATS_AERO_API_KEY}"
+      }
+    }
+  }
+}
