@@ -5,6 +5,8 @@ Run it over stdio with: python -m award_search.server
 The Seats.aero API key is read from SEATS_AERO_API_KEY and never appears in tool output.
 """
 
+import threading
+import time
 from dataclasses import dataclass
 from datetime import date
 from typing import Annotated, Literal
@@ -51,16 +53,55 @@ class SearchAnswer:
     summary: list[SummaryRow]  # every match by route and period, when there are more than 20
 
 
+# An identical search within this time returns the earlier result instead of using another API call
+CACHE_SECONDS = 15 * 60
+_cache: dict[str, tuple[float, SearchResult]] = {}
+# One lock per distinct search: an identical search waits for the one already running, others don't
+_locks: dict[str, threading.Lock] = {}
+_locks_guard = threading.Lock()
+clock = time.monotonic  # replaceable in tests
+
+
+def clear_cache() -> None:
+    _cache.clear()
+    _locks.clear()
+
+
+def cached_search(route_search: RouteSearch) -> tuple[SearchResult, int | None]:
+    """Run the search, or reuse an identical one from the last 15 minutes.
+    Returns the result and, when reused, how many minutes ago it ran. Failures aren't kept, so a retry really retries."""
+    key = repr(route_search)
+    with _locks_guard:
+        lock = _locks.setdefault(key, threading.Lock())
+    with lock:
+        if key in _cache:
+            ran_at, result = _cache[key]
+            if clock() - ran_at < CACHE_SECONDS:
+                return result, int((clock() - ran_at) // 60)
+        result = search(route_search)
+        if result.status != SearchStatus.FAILED:
+            _cache[key] = (clock(), result)
+        return result, None
+
+
 INCOMPLETE_NOTE = (
     "Seats.aero had more results than fit in one response, so this is not a complete check. "
     "Narrow the search (fewer airports or a shorter date range) to see everything."
 )
 
 
-def describe(result: SearchResult) -> str:
+def describe(result: SearchResult, repeated_minutes_ago: int | None = None) -> str:
     """A plain-language summary that keeps failed, incomplete and old results from looking like answers."""
     if result.status == SearchStatus.FAILED:
         return f"The search failed: {result.reason} This does not mean there are no seats."
+
+    if repeated_minutes_ago is not None:
+        when = "less than a minute ago" if repeated_minutes_ago == 0 else f"{repeated_minutes_ago} min ago"
+        repeat_note = (
+            f"This is the same search as one made {when}, so this is that result again and no new check was "
+            "made. Repeating it won't change the answer. "
+        )
+        return repeat_note + describe(result)
 
     if result.status == SearchStatus.NOTHING_FOUND:
         if not result.complete:
@@ -111,29 +152,31 @@ def search_award_seats(
 
     Takes exact airport codes and dates only: turn "London" into ["LHR", "LGW"] and
     "mid-July" into a date range before calling. If the user hasn't said where they're
-    flying from or to, ask them instead of guessing airports. Results are sorted by fewest points
+    flying from or to, ask them instead of guessing airports. Don't repeat a search with the
+    same arguments: an identical search within 15 minutes returns the earlier result. Results are sorted by fewest points
     per seat and capped at 20, with a summary of all matches by route and date or month
     when there are more. Flights with stops and mixed cabin flights (part of the
     distance in a lower cabin) are included and labelled. A status of "failed" means
     the search did not run, so never report it as "no seats".
     """
-    result = search(
+    # Sorted and deduplicated, so the same search with airports in another order counts as identical
+    result, repeated_minutes_ago = cached_search(
         RouteSearch(
-            origins=[code.upper() for code in origins],
-            destinations=[code.upper() for code in destinations],
+            origins=sorted({code.upper() for code in origins}),
+            destinations=sorted({code.upper() for code in destinations}),
             start_date=start_date,
             end_date=end_date,
             cabin=cabin,
             seats=seats,
             points_limit=points_limit,
             direct_only=direct_only,
-            loyalty_programs=loyalty_programs,
+            loyalty_programs=sorted(set(loyalty_programs)) if loyalty_programs else None,
         )
     )
 
     return SearchAnswer(
         status=result.status,
-        message=describe(result),
+        message=describe(result, repeated_minutes_ago),
         seats=result.seats,
         shown=len(result.seats),
         total_found=result.total_found,

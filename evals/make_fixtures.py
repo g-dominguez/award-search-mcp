@@ -32,7 +32,7 @@ def trip(source, cabin, flights, origin, destination, departs, minutes, points, 
         "TaxesCurrency": currency,
         "Carriers": carriers,
         "Stops": len(connections),
-        "Connections": list(connections),
+        "Connections": list(connections) or None,  # Seats.aero sends null for nonstops
         "OriginAirport": origin,
         "DestinationAirport": destination,
         "DepartsAt": departs.strftime("%Y-%m-%dT%H:%M:%SZ"),

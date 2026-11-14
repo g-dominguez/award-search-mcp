@@ -21,6 +21,7 @@ TEST_FIXTURES = Path(__file__).parent.parent / "tests" / "fixtures"
 class Run:
     calls: list[dict]  # arguments of each search_award_seats call, in order
     answer: str
+    api_calls: int = 0  # requests that reached the fake Seats.aero (repeats of a search don't count)
 
     @property
     def first(self) -> dict:
@@ -129,8 +130,8 @@ CASES = [
                 "spring_dates",
                 lambda run: dates_between(run, date(2027, 3, 1), date(2027, 3, 21), date(2027, 5, 31), date(2027, 6, 21)),
             ),
-            # Each search costs one of 1,000 daily API calls. The summary should make one search enough.
-            CodeCheck("at_most_two_searches", lambda run: len(run.calls) <= 2),
+            # Each API call uses one of 1,000 a day. The summary should make one search enough.
+            CodeCheck("at_most_two_api_calls", lambda run: run.api_calls <= 2),
             JudgeCheck(
                 "covers_whole_spring",
                 "Seats under 90k exist in March, April and May, at 85,000 points in every month. A good answer "

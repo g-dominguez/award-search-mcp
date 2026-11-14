@@ -67,6 +67,7 @@ class AwardSeat:
     taxes_currency: str | None
     seats_available: int | None  # None when Seats.aero doesn't know the count
     stops: int
+    connections: list[str]  # airports where the flight stops, in order
     mixed_cabin: bool
     mixed_cabin_pct: int | None  # share of the distance flown below the requested cabin
     last_seen: str | None
@@ -307,6 +308,7 @@ def to_award_seat(item: dict, trip: dict, route_search: RouteSearch, now: dateti
         taxes_currency=trip.get("TaxesCurrency") or item.get("TaxesCurrency"),
         seats_available=int(trip.get("RemainingSeats") or 0) or None,
         stops=int(trip.get("Stops") or 0),
+        connections=list(trip.get("Connections") or []),
         mixed_cabin=bool(mixed_cabin_pct),
         mixed_cabin_pct=mixed_cabin_pct,
         last_seen=last_seen,

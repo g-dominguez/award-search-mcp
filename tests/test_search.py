@@ -71,6 +71,7 @@ def test_match_returns_qualifying_flights_cheapest_first(fake_api):
     assert cheapest.departs_at == "2027-07-17T09:55:00"
     assert cheapest.last_seen == "2026-11-06T18:24:13.784173Z"
     assert cheapest.stops == 0
+    assert cheapest.connections == []
     assert not cheapest.mixed_cabin
 
 
@@ -173,6 +174,7 @@ def test_mixed_cabin_flight_is_included_and_labelled(fake_api):
     assert flight.mixed_cabin
     assert flight.mixed_cabin_pct == 9
     assert flight.stops == 1
+    assert flight.connections == ["CDG"]
     assert (flight.origin, flight.destination) == ("NCE", "LAX")
 
 

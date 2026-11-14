@@ -32,7 +32,10 @@
           "DepartsAt": "2027-07-17T07:10:00Z",
           "ArrivesAt": "2027-07-17T13:45:00Z",
           "UpdatedAt": "2026-11-06T15:02:41.118204Z",
-          "Source": "flyingblue"
+          "Source": "flyingblue",
+          "Connections": [
+            "CDG"
+          ]
         }
       ]
     }

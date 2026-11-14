@@ -96,3 +96,121 @@ async def test_invalid_arguments_are_a_tool_error():
         )
 
     assert result.is_error
+
+
+LHR_LAX_ARGS = {
+    "origins": ["LHR", "LGW"],
+    "destinations": ["LAX"],
+    "start_date": "2027-07-17",
+    "end_date": "2027-07-17",
+    "cabin": "premium",
+}
+
+
+@pytest.fixture
+def counting_api(monkeypatch):
+    """Fake Seats.aero that counts calls. Set .fail_next = True to make the next call an HTTP 500."""
+    import io
+    import json
+    import urllib.error
+
+    from award_search import search as search_module
+
+    class Api:
+        calls = 0
+        fail_next = False
+
+    def fake_urlopen(request, timeout):
+        Api.calls += 1
+        if Api.fail_next:
+            Api.fail_next = False
+            raise urllib.error.HTTPError(request.full_url, 500, "Server Error", {}, None)
+        return io.BytesIO((FIXTURES / "lhr_lax_match.json").read_bytes())
+
+    monkeypatch.setattr(search_module.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setenv("SEATS_AERO_API_KEY", "fake-key")
+    return Api
+
+
+@pytest.mark.anyio
+async def test_identical_search_reuses_the_earlier_result(counting_api):
+    async with Client(mcp) as client:
+        first = await client.call_tool("search_award_seats", LHR_LAX_ARGS)
+        # Same search with the airports in another order and lower case
+        second = await client.call_tool("search_award_seats", LHR_LAX_ARGS | {"origins": ["lgw", "LHR"]})
+
+    assert counting_api.calls == 1
+    assert second.structured_content["seats"] == first.structured_content["seats"]
+    assert second.structured_content["message"].startswith("This is the same search as one made less than a minute ago")
+    assert "same search" not in first.structured_content["message"]
+
+
+@pytest.mark.anyio
+async def test_a_different_search_calls_seats_aero_again(counting_api):
+    async with Client(mcp) as client:
+        await client.call_tool("search_award_seats", LHR_LAX_ARGS)
+        await client.call_tool("search_award_seats", LHR_LAX_ARGS | {"seats": 2})
+
+    assert counting_api.calls == 2
+
+
+@pytest.mark.anyio
+async def test_a_failed_search_is_not_reused(counting_api):
+    counting_api.fail_next = True
+    async with Client(mcp) as client:
+        failed = await client.call_tool("search_award_seats", LHR_LAX_ARGS)
+        retry = await client.call_tool("search_award_seats", LHR_LAX_ARGS)
+
+    assert failed.structured_content["status"] == "failed"
+    assert retry.structured_content["status"] == "found"
+    assert counting_api.calls == 2
+
+
+@pytest.mark.anyio
+async def test_reuse_ends_after_15_minutes(counting_api, monkeypatch):
+    from award_search import server
+
+    now = [1000.0]
+    monkeypatch.setattr(server, "clock", lambda: now[0])
+    async with Client(mcp) as client:
+        await client.call_tool("search_award_seats", LHR_LAX_ARGS)
+        now[0] += 14 * 60
+        reused = await client.call_tool("search_award_seats", LHR_LAX_ARGS)
+        now[0] += 2 * 60  # 16 minutes after the first search
+        await client.call_tool("search_award_seats", LHR_LAX_ARGS)
+
+    assert "made 14 min ago" in reused.structured_content["message"]
+    assert counting_api.calls == 2
+
+
+def test_identical_searches_at_the_same_time_make_one_api_call(monkeypatch):
+    """Claude sometimes sends the same search twice at once. The second should wait for the first."""
+    import io
+    import threading
+    import time
+    from datetime import date
+
+    from award_search import search as search_module
+    from award_search import server
+    from award_search.search import RouteSearch
+
+    calls = []
+
+    def slow_urlopen(request, timeout):
+        calls.append(request)
+        time.sleep(0.3)  # long enough for the second search to arrive while the first is running
+        return io.BytesIO((FIXTURES / "lhr_lax_match.json").read_bytes())
+
+    monkeypatch.setattr(search_module.urllib.request, "urlopen", slow_urlopen)
+    monkeypatch.setenv("SEATS_AERO_API_KEY", "fake-key")
+    route_search = RouteSearch(["LHR"], ["LAX"], date(2027, 7, 17), date(2027, 7, 17), "premium")
+
+    answers = []
+    threads = [threading.Thread(target=lambda: answers.append(server.cached_search(route_search))) for _ in range(2)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
+    assert len(calls) == 1
+    assert sorted(minutes is None for _, minutes in answers) == [False, True]  # one ran, one reused it

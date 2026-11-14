@@ -38,7 +38,8 @@ def claude_env() -> dict:
 
 def run_claude(case: Case) -> tuple[Run, str]:
     """Run one prompt with only our server available. Returns what Claude did and which model ran."""
-    with FakeSeatsAero(case.scenario) as url, tempfile.TemporaryDirectory() as workdir:
+    fake = FakeSeatsAero(case.scenario)
+    with fake as url, tempfile.TemporaryDirectory() as workdir:
         mcp_config = Path(workdir) / "mcp.json"
         mcp_config.write_text(json.dumps({"mcpServers": {"award-search": {
             "command": str(REPO_ROOT / ".venv" / "bin" / "python"),
@@ -68,7 +69,7 @@ def run_claude(case: Case) -> tuple[Run, str]:
             answer = event.get("result") or ""
     if proc.returncode and not answer:
         answer = f"[claude exited with code {proc.returncode}: {proc.stderr[-300:]}]"
-    return Run(calls=calls, answer=answer), model
+    return Run(calls=calls, answer=answer, api_calls=len(fake.requests)), model
 
 
 def judge(check: JudgeCheck, case: Case, run: Run) -> tuple[bool, str]:
@@ -104,6 +105,7 @@ def run_once(case: Case) -> dict:
         "passed": all(c["passed"] for c in checks),
         "checks": checks,
         "tool_calls": run.calls,
+        "api_calls": run.api_calls,
         "answer": run.answer,
         "model": model,
         "seconds": round(time.monotonic() - started, 1),
@@ -124,7 +126,10 @@ def print_report(results: dict, previous: dict | None) -> None:
         change = ""
         if case["name"] in before and before[case["name"]]["passed"] != case["passed"]:
             change = "  (was " + ("PASS" if before[case["name"]]["passed"] else "FAIL") + ")"
-        print(f"{mark}  {case['name']}  {sum(r['passed'] for r in runs)}/{len(runs)} runs{change}")
+        searches = ",".join(str(len(r["tool_calls"])) for r in runs)
+        api_calls = ",".join(str(r.get("api_calls", "?")) for r in runs)
+        print(f"{mark}  {case['name']}  {sum(r['passed'] for r in runs)}/{len(runs)} runs{change}"
+              f"  [searches {searches}; API calls {api_calls}]")
         for i, run in enumerate(runs, 1):
             for check in run["checks"]:
                 if not check["passed"]:
