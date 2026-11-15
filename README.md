@@ -118,12 +118,14 @@ sam build
 sam deploy --stack-name award-search-mcp --resolve-s3 --capabilities CAPABILITY_IAM
 ```
 
-To use it from Claude Code in every folder, keep the token in your shell like the API key above, and add the server with the variable's name in single quotes, so the token itself isn't saved in Claude Code's settings:
+To use it from Claude Code in every folder, keep the token in the macOS Keychain and add the server with a `headersHelper`. Claude Code runs the helper each time it connects, so the token is read from the Keychain then. It isn't saved in Claude Code's settings and doesn't depend on any environment variable, so it works however Claude Code is started:
 
 ```sh
-export AWARD_SEARCH_MCP_TOKEN="$(security find-generic-password -a "$USER" -s award-search-mcp-token -w)"   # in ~/.zshrc
-claude mcp add --transport http --scope user award-search-remote <address> --header 'Authorization: Bearer ${AWARD_SEARCH_MCP_TOKEN}'
+security add-generic-password -a "$USER" -s award-search-mcp-token -w   # paste the token when asked
+claude mcp add-json --scope user award-search-remote '{"type": "http", "url": "<address>", "headersHelper": "printf %s \"{\\\"Authorization\\\": \\\"Bearer $(security find-generic-password -s award-search-mcp-token -w)\\\"}\""}'
 ```
+
+If it fails to connect, the server's 401 says exactly why, for example that no Authorization header was sent or that the token doesn't match.
 
 To run the HTTP version locally instead: `MCP_BEARER_TOKEN=... SEATS_AERO_API_KEY=... python -m award_search.http_app`, which serves it at `http://127.0.0.1:8080/mcp`.
 
