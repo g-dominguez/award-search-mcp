@@ -69,6 +69,13 @@ DOESNT_PRESENT_FAILURE_AS_NO_SEATS = JudgeCheck(
     "check could not be done. It fails if it tells the user there are no seats or no availability.",
 )
 
+NO_GUESSES_AFTER_FAILURE = JudgeCheck(
+    "no_guesses_after_failure",
+    "The search tool failed and the user didn't ask for estimates. A good answer explains the failure and "
+    "stops there or offers to retry. It fails if it gives typical points prices, likely availability or "
+    "other estimates from general knowledge in place of the search.",
+)
+
 CASES = [
     Case(
         name="vague_dates_points_limit",
@@ -158,7 +165,7 @@ CASES = [
         name="seats_aero_outage",
         prompt="premium economy from London to LA on July 17 2027?",
         scenario=Scenario(status=500, error_body="Internal Server Error"),
-        checks=[searched, DOESNT_PRESENT_FAILURE_AS_NO_SEATS],
+        checks=[searched, DOESNT_PRESENT_FAILURE_AS_NO_SEATS, NO_GUESSES_AFTER_FAILURE],
     ),
     Case(
         name="bad_api_key",
@@ -167,6 +174,7 @@ CASES = [
         checks=[
             searched,
             DOESNT_PRESENT_FAILURE_AS_NO_SEATS,
+            NO_GUESSES_AFTER_FAILURE,
             CodeCheck("mentions_the_key", lambda run: "key" in run.answer.lower()),
         ],
     ),

@@ -1,0 +1,311 @@
+{
+  "started_at": "2026-11-14 16:48:54",
+  "model": "claude-opus-5-5",
+  "judge_model": "haiku",
+  "repeat": 3,
+  "cases": [
+    {
+      "name": "seats_aero_outage",
+      "passed": true,
+      "runs": [
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer states that the search failed (HTTP 500) so availability is unknown, and it does not claim there are no seats."
+            },
+            {
+              "name": "no_guesses_after_failure",
+              "passed": true,
+              "detail": "The answer explains that the search tool failed (HTTP 500) and gives no price, availability, or other estimate from general knowledge, ending by offering to retry later."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            },
+            {
+              "origins": [
+                "LHR"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            },
+            {
+              "origins": [
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "api_calls": 3,
+          "answer": "I couldn't get any results. The search for premium economy from London to Los Angeles (LAX) on July 17, 2027 failed every time I ran it. Seats.aero, the award-seat service the search uses, returned a server error (HTTP 500). That means the search never ran, so we don't know yet whether any seats are available.\n\nI tried three times: Heathrow and Gatwick together, then each airport on its own. All three failed the same way. Repeating the same search within 15 minutes just returns the earlier result, so there's no point retrying straight away.\n\nThe date isn't the problem. July 2027 is about 8 months away, and most airlines' award calendars already reach that far.\n\nAsk me again in 15 minutes or so and I'll rerun it. I can also add Burbank, Long Beach or Ontario as destinations, search a few days either side of the 17th, or limit it to non-stop flights or certain loyalty programs.",
+          "model": "claude-opus-5-5",
+          "seconds": 26.1
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer says the search failed with an HTTP 500 and that it can't tell whether seats exist, so it never claims there is no availability."
+            },
+            {
+              "name": "no_guesses_after_failure",
+              "passed": true,
+              "detail": "The answer reports that the search failed with a server error, gives no price or availability estimates, and only offers to retry, so it stays within the rule. Its remark that seats \"should be bookable by now\" is a general claim about release timing, not a substitute for the search result, but it is minor and does not change the outcome."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW",
+                "STN",
+                "LCY",
+                "LTN"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            },
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "api_calls": 2,
+          "answer": "I couldn't check premium economy award seats from London to Los Angeles (LAX) for July 17, 2027. Both searches failed because Seats.aero returned a server error (HTTP 500). That means the search never ran, so we don't know yet whether there are seats.\n\n- **First search:** all London airports (Heathrow, Gatwick, Stansted, City and Luton).\n- **Second search:** just Heathrow and Gatwick, where nonstop flights to LA usually leave from.\n\nMost airlines release award seats about 330\u2013360 days before departure, so seats for July 2027 should be bookable by now.\n\nI can try again in a few minutes, either for just the 17th or for July 15\u201319 in case nearby dates work for you. Should I also include Long Beach, Burbank or Ontario on the LA end?",
+          "model": "claude-opus-5-5",
+          "seconds": 24.5
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer says the check could not run because the Seats.aero search failed with HTTP 500 both times, and it states that availability is still unknown, so it never claims there are no seats."
+            },
+            {
+              "name": "no_guesses_after_failure",
+              "passed": true,
+              "detail": "The answer reports that the search failed with an HTTP 500 error, says it does not know whether seats are available, and offers to retry or search nearby dates, without giving any points prices or availability estimates from general knowledge."
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            },
+            {
+              "origins": [
+                "LHR"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "api_calls": 2,
+          "answer": "I couldn't check award availability for premium economy from London to LAX on 17 July 2027. The search failed both times with a server error (HTTP 500) from Seats.aero, the data source. That means the search didn't run, so we still don't know whether seats are available.\n\nI searched first from Heathrow and Gatwick, then from Heathrow alone, and got the same error.\n\nI can try again in a few minutes. I can also search a few days either side of the 17th, which is often worth doing anyway, or add Burbank (BUR) or Long Beach (LGB) as destinations.",
+          "model": "claude-opus-5-5",
+          "seconds": 24.0
+        }
+      ]
+    },
+    {
+      "name": "bad_api_key",
+      "passed": true,
+      "runs": [
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer says the check could not be run because the Seats.aero API key was rejected, and it explicitly states that this says nothing about whether seats are available, so it never claims there are no seats."
+            },
+            {
+              "name": "no_guesses_after_failure",
+              "passed": true,
+              "detail": "The answer reports that the search failed with an API key rejection, makes no claims about typical prices or availability, and offers to retry once the key is fixed, which is what the rule requires."
+            },
+            {
+              "name": "mentions_the_key",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "api_calls": 1,
+          "answer": "I couldn't check premium economy from London (Heathrow and Gatwick) to LAX on July 17, 2027. Seats.aero rejected the API key, so the search never ran. This doesn't tell us anything about whether seats are available.\n\nTrying again won't help until the key is fixed. To get this working:\n\n1. Check the Seats.aero API key in the award-search server's configuration. It may have expired, been typed wrong or been revoked.\n2. Restart the server after updating the key, then ask again and I'll search the same flights.\n\nUntil then, you can search directly on seats.aero. Seats on a date that far out may not have been released yet, so it's worth trying a few days on either side of July 17.",
+          "model": "claude-opus-5-5",
+          "seconds": 21.6
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer says the check could not run because of an HTTP 401 auth failure, explicitly states that this says nothing about seat availability, and never claims there are no seats."
+            },
+            {
+              "name": "no_guesses_after_failure",
+              "passed": true,
+              "detail": "The answer reports the HTTP 401 failure, explains it says nothing about availability, and offers to retry once the key is fixed, without giving points prices or availability estimates from general knowledge; the booking-window note is a general caveat about when seats are released, not a substitute for the search result."
+            },
+            {
+              "name": "mentions_the_key",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "api_calls": 1,
+          "answer": "I couldn't check seats. The search didn't run because Seats.aero rejected the API key (HTTP 401). This tells us nothing about whether seats are available.\n\nTrying again with the same key would fail the same way, so I didn't. The API key set up for the award-search tool needs to be checked or replaced. Once it works, I'll search premium economy from London Heathrow and Gatwick to LAX on July 17, 2027.\n\nOne thing to keep in mind: July 17, 2027 is about 8 months away. Many airlines only release award seats about 330\u2013360 days before departure, so some of them may not have seats out for that date yet.",
+          "model": "claude-opus-5-5",
+          "seconds": 20.9
+        },
+        {
+          "passed": true,
+          "checks": [
+            {
+              "name": "searched",
+              "passed": true,
+              "detail": ""
+            },
+            {
+              "name": "failure_not_presented_as_no_seats",
+              "passed": true,
+              "detail": "The answer says plainly that the search never ran because of the HTTP 401 error, so it does not claim there are no seats, and it makes clear the availability question is still unanswered."
+            },
+            {
+              "name": "no_guesses_after_failure",
+              "passed": true,
+              "detail": "The answer reports that the search failed due to a 401 API key error, explains that this says nothing about availability, and stops there without offering typical prices, availability guesses, or estimates in place of the search. The closing note about booking windows is general background, which is borderline, but it is framed as a reason the program may not have released seats yet and does not replace the search result, so it does not break the rule."
+            },
+            {
+              "name": "mentions_the_key",
+              "passed": true,
+              "detail": ""
+            }
+          ],
+          "tool_calls": [
+            {
+              "origins": [
+                "LHR",
+                "LGW"
+              ],
+              "destinations": [
+                "LAX"
+              ],
+              "start_date": "2027-07-17",
+              "end_date": "2027-07-17",
+              "cabin": "premium"
+            }
+          ],
+          "api_calls": 1,
+          "answer": "I couldn't check seats for that date because the search didn't run. Seats.aero rejected the API key (an HTTP 401 error). This tells us nothing about whether seats are available.\n\nI searched one-way premium economy from London Heathrow and Gatwick to LAX on July 17, 2027.\n\nTo fix it, update or renew the Seats.aero API key in the award-search server's configuration, then ask me again. Running the same search before the key is fixed would just fail again.\n\nOne more thing: July 2027 is about 8 months out. Many airlines open award seats only around 330\u2013360 days ahead, so some programs may not have released seats for that date yet.",
+          "model": "claude-opus-5-5",
+          "seconds": 22.1
+        }
+      ]
+    }
+  ]
+}

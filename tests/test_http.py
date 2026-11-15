@@ -83,23 +83,34 @@ def post(url: str, headers: dict[str, str]) -> tuple[int, str]:
 
 
 @pytest.mark.parametrize(
-    "headers",
+    ("headers", "reason"),
     [
-        {},
-        {"Authorization": "Bearer wrong-token-that-is-also-long-0123456789"},
-        {"Authorization": f"Bearer {TOKEN[:-1]}"},  # all but the last character
-        {"Authorization": TOKEN},  # missing "Bearer "
+        ({}, "No Authorization header was sent"),
+        # What Claude Code sends when the token's environment variable isn't set (checked by capturing it)
+        ({"Authorization": "Bearer ${AWARD_SEARCH_MCP_TOKEN}"}, "AWARD_SEARCH_MCP_TOKEN wasn't set"),
+        ({"Authorization": "Bearer ${OTHER_NAME:-}"}, "OTHER_NAME wasn't set"),
+        ({"Authorization": "Bearer "}, "no token after"),
+        ({"Authorization": "Bearer"}, "no token after"),
+        ({"Authorization": TOKEN}, "must start with"),
+        ({"Authorization": "Bearer wrong-token-that-is-also-long-0123456789"}, "doesn't match"),
+        ({"Authorization": f"Bearer {TOKEN[:-1]}"}, "doesn't match"),  # all but the last character
     ],
-    ids=["no token", "wrong token", "almost right", "no Bearer prefix"],
+    ids=["no header", "unset variable", "unset variable with default", "empty token", "empty token, trimmed", "no Bearer prefix", "wrong token", "almost right"],
 )
-def test_requests_without_the_right_token_are_rejected(http_server, headers):
+def test_rejections_say_exactly_what_was_wrong(http_server, headers, reason):
     base_url, received_keys = http_server
 
     status, body = post(f"{base_url}/mcp", headers)
 
     assert status == 401
-    assert json.loads(body) == {"error": "unauthorized"}
+    answer = json.loads(body)
+    assert answer["error"] == "unauthorized"
+    assert reason in answer["reason"]
+    # Never echo the expected token or what was sent
     assert TOKEN not in body
+    assert TOKEN[:-1] not in body
+    assert "wrong-token" not in body
+    assert received_keys == []  # nothing reached Seats.aero
 
 
 def test_every_path_needs_the_token(http_server):

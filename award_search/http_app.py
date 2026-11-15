@@ -11,6 +11,7 @@ the MCP server sees it. Neither secret appears in responses or logs.
 import hmac
 import json
 import os
+import re
 import sys
 
 import uvicorn
@@ -20,6 +21,9 @@ from award_search.server import mcp
 
 # Long enough that guessing it is hopeless, e.g. from: python -c "import secrets; print(secrets.token_urlsafe(32))"
 MIN_TOKEN_LENGTH = 32
+
+# A client that can't fill in a ${NAME} variable sends the text as is, e.g. Claude Code when NAME isn't set
+UNFILLED_VARIABLE = re.compile(rb"^\$\{([A-Za-z_][A-Za-z0-9_]*)(:-[^}]*)?\}$")
 
 
 class RequireBearerToken:
@@ -31,23 +35,48 @@ class RequireBearerToken:
 
     def __init__(self, app: ASGIApp, token: str):
         self.app = app
-        self.expected = f"Bearer {token}".encode()
+        self.expected = token.encode()
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         # "lifespan" messages are the server starting and stopping, not requests
-        if scope["type"] == "http" and not self._authorized(scope):
-            await self._reject(send)
-            return
+        if scope["type"] == "http":
+            problem = self._problem(scope)
+            if problem:
+                await self._reject(send, problem)
+                return
         await self.app(scope, receive, send)
 
-    def _authorized(self, scope: Scope) -> bool:
-        sent = dict(scope["headers"]).get(b"authorization", b"")
+    def _problem(self, scope: Scope) -> str | None:
+        """What's wrong with the request's token, or None if it's right.
+
+        The reasons are specific so a failure can be fixed without guessing,
+        but they never include the expected token or what was sent.
+        """
+        sent = dict(scope["headers"]).get(b"authorization")
+        if sent is None:
+            return 'No Authorization header was sent. Send "Authorization: Bearer <token>".'
+        scheme, _, token = sent.strip().partition(b" ")
+        if scheme.lower() != b"bearer":
+            return 'The Authorization header must start with "Bearer " followed by the token.'
+        token = token.strip()
+        if not token:
+            return 'The Authorization header had no token after "Bearer", so the client\'s token setting is empty.'
+        unfilled = UNFILLED_VARIABLE.match(token)
+        if unfilled:
+            name = unfilled.group(1).decode()
+            return (
+                f"The client sent the text ${{{name}}} instead of a token, because the environment variable "
+                f"{name} wasn't set when the client started. Set it in the shell that starts the client "
+                "(for Claude Code, open a new terminal or run: source ~/.zshrc), then restart the client."
+            )
         # compare_digest takes the same time however many characters match, so timing can't reveal the token
-        return hmac.compare_digest(sent, self.expected)
+        if not hmac.compare_digest(token, self.expected):
+            return "The bearer token doesn't match the token this server was started with."
+        return None
 
     @staticmethod
-    async def _reject(send: Send) -> None:
-        body = json.dumps({"error": "unauthorized"}).encode()
+    async def _reject(send: Send, reason: str) -> None:
+        body = json.dumps({"error": "unauthorized", "reason": reason}).encode()
         await send(
             {
                 "type": "http.response.start",
