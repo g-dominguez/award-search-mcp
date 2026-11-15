@@ -95,7 +95,7 @@ A real broad search through `claude -p` showed Claude passing on the new warning
 
 ## Backlog
 
-- **The monitor hides American seats.** `seats-aero-monitor`'s `flight_qualifies` treats `RemainingSeats: 0` as no seats, but for American it means unknown. That's for the owner to decide, since the monitor isn't changed from here.
+Empty. The monitor hiding American seats was dropped on November 14, 2026: it only affects bookings through AAdvantage, and I don't have AAdvantage miles.
 
 ## Later ideas
 
