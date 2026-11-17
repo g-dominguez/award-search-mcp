@@ -27,7 +27,7 @@ Terms used here are defined in `GLOSSARY.md`.
 - **Python with the official MCP Python SDK.** Tests use saved fake API responses and never hit the network.
 - **Fixtures are made up.** Seats.aero's terms (updated August 12, 2026) say flights more than 60 days out can't be shown publicly, and this repo is public. So test and eval fixtures are invented flights in Seats.aero's response format, and real responses are only used locally to learn the format. History was rewritten on November 14, 2026 to remove the real responses committed before this rule.
 - **Runs on my laptop first.** AWS hosting is an optional final stage if costs stay low.
-- **Hosted on AWS Lambda with a function URL** (stage 7, decided November 14, 2026). Deployed with an AWS SAM template to `us-west-2`. Secrets live in Parameter Store. Every request needs a bearer token, which the server checks itself instead of using the SDK's OAuth settings. Those settings make the server announce OAuth, and an open Claude Code bug report says that makes it ignore the token header. Only Claude Code uses the remote server: Claude Desktop accepts a static token only through a beta limited to some organizations, so it keeps using the local version. The URL isn't committed, because this repo is public: Claude Code is set up as a user-scope server whose `headersHelper` reads the token from the macOS Keychain each time it connects, so it works however Claude Code is started.
+- **Hosted on AWS Lambda with a function URL** (stage 7, decided November 14, 2026). Deployed with an AWS SAM template to `us-west-2`. Secrets live in Parameter Store. Every request needs a bearer token, which the server checks itself instead of using the SDK's OAuth settings. Those settings make the server announce OAuth, and an open Claude Code bug report says that makes it ignore the token header. Claude Desktop and claude.ai use it through a custom connector that sends the token as a request header. Added November 16, 2026: the Request headers option is in beta, but my personal account has it. The URL isn't committed, because this repo is public: Claude Code is set up as a user-scope server whose `headersHelper` reads the token from the macOS Keychain each time it connects, so it works however Claude Code is started.
 
 ## Stages
 
@@ -99,6 +99,6 @@ Empty. The monitor hiding American seats was dropped on November 14, 2026: it on
 
 ## Later ideas
 
-- OAuth for the hosted server, so Claude Desktop and claude.ai can use it without the static-token beta.
+- OAuth for the hosted server, only if the custom connector's Request headers beta goes away.
 - Open searches by program ("where can I fly business with Aeroplan in March?"), using Seats.aero's broader availability endpoint.
 - Use the Playwright MCP next to this server to check other sites. This only involves configuring Claude, not changing this server's code. Check each site's terms first.

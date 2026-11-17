@@ -127,6 +127,8 @@ claude mcp add-json --scope user award-search-remote '{"type": "http", "url": "<
 
 If it fails to connect, the server's 401 says exactly why, for example that no Authorization header was sent or that the token doesn't match.
 
+To use it from Claude Desktop, claude.ai or the mobile app, add it once as a custom connector on claude.ai: **Plugins → Add → Add custom connector**. Enter the address, click Continue, choose **No sign-in**, and under **Request headers** add `authorization` with the value `Bearer <token>`. It then shows up in the Desktop app too. "Sign in now" is marked "Detected" because the server's 401 sends `WWW-Authenticate: Bearer`, but the server doesn't use OAuth, so No sign-in is the right choice. Request headers were in beta when this was written (November 2026), so not every account has them.
+
 To run the HTTP version locally instead: `MCP_BEARER_TOKEN=... SEATS_AERO_API_KEY=... python -m award_search.http_app`, which serves it at `http://127.0.0.1:8080/mcp`.
 
 ## Evals
